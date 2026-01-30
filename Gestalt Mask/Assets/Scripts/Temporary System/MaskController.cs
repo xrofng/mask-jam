@@ -24,7 +24,14 @@ public class MaskController : BetterMonoBehaviour
         }
     }
 
+    public ECurse InitialCurse;
     public ECurse CurrentCurse;
+
+    protected override void Start()
+    {
+        base.Start();
+        SetCurse(InitialCurse);
+    }
 
     public void SetCurse(ECurse curse)
     {

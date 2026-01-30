@@ -9,7 +9,7 @@ public class ClosureBox : GestaltObj
     protected override MaskController.ECurse TargetCurse => MaskController.ECurse.Closure;
 
 
-    protected override void Start()
+    protected override void Awake()
     {
         OnCurseDisabled();
     }

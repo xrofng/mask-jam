@@ -10,7 +10,7 @@ public class InvarianceBox : GestaltObj
     protected override MaskController.ECurse TargetCurse => MaskController.ECurse.Invariance;
 
 
-    protected override void Start()
+    protected override void Awake()
     {
         OnCurseDisabled();
     }

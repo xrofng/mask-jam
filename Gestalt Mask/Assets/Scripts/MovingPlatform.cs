@@ -19,7 +19,7 @@ public class MovingPlatform : GestaltObj
     protected override MaskController.ECurse TargetCurse
         => MaskController.ECurse.Continuance;
 
-    protected override void Start()
+    protected override void Awake()
     {
         if (movementPos.Count == 0) return;
 
