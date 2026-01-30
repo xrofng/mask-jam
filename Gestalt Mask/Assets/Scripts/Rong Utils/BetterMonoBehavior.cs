@@ -12,6 +12,11 @@ public class BetterMonoBehaviour : MonoBehaviour
 
     }
 
+    protected virtual void FixedUpdate()
+    {
+
+    }
+
     protected virtual void OnEnable()
     {
 

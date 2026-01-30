@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DebugMaskSwitcher : BetterMonoBehaviour
+public class MaskController : BetterMonoBehaviour
 {
     public enum ECurse
     {

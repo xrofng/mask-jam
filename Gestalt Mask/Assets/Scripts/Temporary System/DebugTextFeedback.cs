@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class DebugTextFeedback : BetterMonoBehaviour, IEventSubcriber<DebugMaskSwitcher.EvsCurseChanged>
+public class DebugTextFeedback : BetterMonoBehaviour, IEventSubcriber<MaskController.EvsCurseChanged>
 {
     private TextMeshProUGUI _text;
     private TextMeshProUGUI Text
@@ -27,7 +27,7 @@ public class DebugTextFeedback : BetterMonoBehaviour, IEventSubcriber<DebugMaskS
         EventBusRegister.EventBusUnscribe(this);
     }
 
-    public void OnEventBusTrigger(DebugMaskSwitcher.EvsCurseChanged eventType)
+    public void OnEventBusTrigger(MaskController.EvsCurseChanged eventType)
     {
         Text.text = "Equip mask " + eventType.NextCurse;
         Invoke(nameof(ClearText), 1);
