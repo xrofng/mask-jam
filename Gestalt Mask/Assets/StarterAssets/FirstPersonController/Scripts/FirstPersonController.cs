@@ -203,7 +203,7 @@ namespace StarterAssets
 
             if (externalForceSpeed != 0)
             {
-                 currentSpeed = Mathf.Abs( _speed / externalForceSpeed);
+                currentSpeed = Mathf.Abs(_speed / externalForceSpeed);
                 externalForceValue = externalForce * externalForceSpeed * Time.deltaTime;
             }
             else
@@ -211,7 +211,11 @@ namespace StarterAssets
                 currentSpeed = _speed;
             }
 
-            
+            if (externalForce != Vector3.zero)
+            {
+                _controller.Move(externalForceValue + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+                return;
+            }
 
             //  if (inputDirection == Vector3.zero && _verticalVelocity == 0 && externalForce == Vector3.zero) return;
             _controller.Move(inputDirection.normalized * (currentSpeed * Time.deltaTime) + externalForceValue + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
@@ -284,7 +288,7 @@ namespace StarterAssets
             Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
         }
 
-        public void setExternalForce(Vector3 force , float externalForceSpeed)
+        public void setExternalForce(Vector3 force, float externalForceSpeed)
         {
             externalForce = force;
             this.externalForceSpeed = externalForceSpeed;
