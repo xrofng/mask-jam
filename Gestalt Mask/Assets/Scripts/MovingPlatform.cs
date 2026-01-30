@@ -49,7 +49,6 @@ public class MovingPlatform : GestaltObj
         }
 
         Vector3 direction = (targetPos - currentPos).normalized;
-        direction.y = 0;
 
         // Move platform
         transform.position = Vector3.MoveTowards(
