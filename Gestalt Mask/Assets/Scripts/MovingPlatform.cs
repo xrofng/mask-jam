@@ -59,7 +59,7 @@ public class MovingPlatform : GestaltObj
 
         if (playerController != null)
         {
-            playerController.setExternalForce(direction * speed * Time.deltaTime);
+            playerController.setExternalForce(direction , speed);
         }
 
 
@@ -107,7 +107,7 @@ public class MovingPlatform : GestaltObj
 
             if (other.gameObject.TryGetComponent<StarterAssets.FirstPersonController>(out StarterAssets.FirstPersonController control))
             {
-                playerController.setExternalForce(Vector3.zero);
+                playerController.setExternalForce(Vector3.zero , 0);
                 playerController = null;
             }
         }
