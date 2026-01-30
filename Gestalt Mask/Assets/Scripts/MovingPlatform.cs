@@ -8,11 +8,14 @@ public class MovingPlatform : GestaltObj
     [SerializeField] Vector3 offset = Vector3.zero;
     [SerializeField] float speed = 5f;
     [SerializeField] bool lockY = true;
-
+    [SerializeField] bool oneTrip = false;
     Transform target;
+
+
+
+
     int currentIndex = 0;
     StarterAssets.FirstPersonController playerController;
-
     protected override MaskController.ECurse TargetCurse
         => MaskController.ECurse.Continuance;
 
@@ -77,6 +80,10 @@ public class MovingPlatform : GestaltObj
 
             if (currentIndex >= movementPos.Count)
                 currentIndex = 0;
+            if (oneTrip)
+            {
+                target = null;
+            }
 
             target = movementPos[currentIndex];
         }
