@@ -46,15 +46,15 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
     {
         if (Input.GetKeyDown(KeyCode.E)) //change E to whichever key you want to press to pick up
         {
-            if (heldObj == null) //if currently not holding anything
+            if (heldObj == null)
             {
-                //perform raycast to check if player is looking at object within pickuprange
-                RaycastHit hit;
-                Physics.Raycast(transform.position, CameraTransform.TransformDirection(Vector3.forward), out hit, pickUpRange, PickableLayer);
-                if (hit.collider != null)
+                RaycastHit closestHit;
+                bool found;
+                DoSphereRay(out closestHit, out found);
+
+                if (found)
                 {
-                    //pass in object hit into the PickUpObject function
-                    PickUpObject(hit.transform.gameObject);
+                    PickUpObject(closestHit.transform.gameObject);
                 }
             }
             else
@@ -78,6 +78,39 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
 
         }
     }
+
+    private void DoSphereRay(out RaycastHit closestHit, out bool found)
+    {
+        Ray ray = new Ray(
+                            transform.position,
+                            CameraTransform.forward
+                        );
+
+        float radius = 0.35f; 
+        RaycastHit[] hits = Physics.SphereCastAll(
+            ray,
+            radius,
+            pickUpRange,
+            PickableLayer,
+            QueryTriggerInteraction.Ignore
+        );
+
+        closestHit = default;
+        float closestDistance = float.MaxValue;
+        found = false;
+        foreach (var hit in hits)
+        {
+            if (hit.collider == null) continue;
+
+            if (hit.distance < closestDistance)
+            {
+                closestDistance = hit.distance;
+                closestHit = hit;
+                found = true;
+            }
+        }
+    }
+
     void PickUpObject(GameObject pickUpObj)
     {
         if (pickUpObj.GetComponent<Rigidbody>()) //make sure the object has a RigidBody

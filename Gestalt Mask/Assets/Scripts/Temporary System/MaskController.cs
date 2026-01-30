@@ -30,6 +30,11 @@ public class MaskController : BetterMonoBehaviour
     protected override void Start()
     {
         base.Start();
+        Invoke(nameof(SetCurseInitial), float.MinValue);
+    }
+
+    private void SetCurseInitial()
+    {
         SetCurse(InitialCurse);
     }
 

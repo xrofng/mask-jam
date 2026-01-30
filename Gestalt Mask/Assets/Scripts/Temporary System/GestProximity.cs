@@ -5,7 +5,6 @@ using UnityEngine;
 public class GestProximity : GestaltObj
 {
     public List<GameObject> GroupMember;
-    public PickableObj ThisPickable;
 
     protected override MaskController.ECurse TargetCurse => MaskController.ECurse.Proximity;
 
@@ -29,7 +28,6 @@ public class GestProximity : GestaltObj
             member.gameObject.SetActive(true);
             member.transform.parent = null;
         }
-        ThisPickable.DisableInteraction();
         Invoke(nameof(HideThisObj), float.MinValue);
     }
 
@@ -45,7 +43,6 @@ public class GestProximity : GestaltObj
         {
             GroupMember[i].transform.localPosition = _memberIdToInitialLocalPos[i];
         }
-        ThisPickable.EnableInteraction();
     }
 
     public void AddMember(GameObject newMember)

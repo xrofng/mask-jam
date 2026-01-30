@@ -3,6 +3,9 @@ using static MaskController;
 
 public class GestaltObj : BetterMonoBehaviour, IEventSubcriber<EvsCurseChanged>
 {
+    protected virtual ECurse TargetCurse => ECurse.None;
+    public ECurse changedCurse => TargetCurse;
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -35,10 +38,7 @@ public class GestaltObj : BetterMonoBehaviour, IEventSubcriber<EvsCurseChanged>
             OnCurseDisabled();
         }
     }
-
-    protected virtual ECurse TargetCurse => ECurse.None;
-    public ECurse changedCurse => TargetCurse;
-
+    
     /// <summary>
     /// Called when the target curse becomes active.
     /// </summary>

@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using static MaskController;
 
@@ -19,18 +18,28 @@ public class ChangeColor : BetterMonoBehaviour, IEventSubcriber<EvsCurseChanged>
 
     protected override void OnDisable()
     {
-        EventBus.RemoveSubcriber<EvsCurseChanged>(this);
         base.OnDisable();
+        EventBus.RemoveSubcriber<EvsCurseChanged>(this);
     }
-    protected override void Start()
+
+    protected override void Awake()
     {
-        colStor = GlobalColStorManager.Instance;
+        base.Awake();
+        if (gestaltObj == null)
+        {
+            Debug.LogWarning(name + "No GestaltObj found");
+        }
+        if (_renderer == null)
+        {
+            Debug.LogWarning(name + "No Renderer found");
+        }
     }
 
     //On curse change event:
     public void OnEventBusTrigger(EvsCurseChanged eventType)
     {
-        if(gestaltObj.changedCurse == ECurse.None)
+        colStor = GlobalColStorManager.Instance;
+        if (gestaltObj.changedCurse == ECurse.None)
         {
             _renderer.material.SetColor("_BaseColor", colStor.none_base);
         }
@@ -44,6 +53,9 @@ public class ChangeColor : BetterMonoBehaviour, IEventSubcriber<EvsCurseChanged>
         }
         else if (gestaltObj.changedCurse == ECurse.Continuance)
         {
+            Debug.Log(name + " err " + _renderer);
+            Debug.Log(name + " err " + _renderer.material);
+            Debug.Log(name + " err " + colStor);
             _renderer.material.SetColor("_BaseColor", colStor.continuance_base);
         }
         else if (gestaltObj.changedCurse == ECurse.Closure)

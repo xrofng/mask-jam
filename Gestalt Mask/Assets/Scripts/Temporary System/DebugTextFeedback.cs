@@ -62,9 +62,9 @@ public class DebugTextFeedback : BetterMonoBehaviour, IEventSubcriber<MaskContro
             {
                 previosOpenItem.TriggerOnDeselect();
             }
-
-            previosOpenItem = frames.FirstOrDefault(i => i.Type == eventType.NextCurse);
-            previosOpenItem.TriggerOnSelect();
+            // TODO I-pun
+            //previosOpenItem = frames.FirstOrDefault(i => i.Type == eventType.NextCurse);
+            //previosOpenItem.TriggerOnSelect();
         }
 
 

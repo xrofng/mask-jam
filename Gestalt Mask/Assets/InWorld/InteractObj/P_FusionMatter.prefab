@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4860275382723269873}
   - component: {fileID: 8934813867003862806}
   - component: {fileID: 5657481822225842371}
-  - component: {fileID: 3232802856032552179}
   - component: {fileID: 1417238611770628076}
   m_Layer: 6
   m_Name: P_FusionMatter
@@ -124,21 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GroupMember: []
-  ThisPickable: {fileID: 3232802856032552179}
---- !u!114 &3232802856032552179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5218549155333434166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bbcab890d690aa46a498b32a42e72b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prompt: Interact
-  isEnabled: 1
+  ThisPickable: {fileID: 0}
 --- !u!54 &1417238611770628076
 Rigidbody:
   m_ObjectHideFlags: 0
