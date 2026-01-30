@@ -7,12 +7,14 @@ public class GestaltObj : BetterMonoBehaviour, IEventSubcriber<EvsCurseChanged>
     {
         base.OnEnable();
         EventBus.AddSubcriber<EvsCurseChanged>(this);
+        Debug.Log("sub " + name);
     }
 
     protected override void OnDisable()
     {
-        EventBus.RemoveSubcriber<EvsCurseChanged>(this);
         base.OnDisable();
+        Debug.Log("unsub " + name);
+        EventBus.RemoveSubcriber<EvsCurseChanged>(this);
     }
 
     public void OnEventBusTrigger(EvsCurseChanged e)

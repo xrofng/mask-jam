@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GestProximity : GestaltObj
 {
-    public List<Interactable> GroupMember;
+    public List<GameObject> GroupMember;
     public PickableObj ThisPickable;
 
     protected override MaskController.ECurse TargetCurse => MaskController.ECurse.Proximity;
@@ -25,10 +26,16 @@ public class GestProximity : GestaltObj
         base.OnCurseEnabled();
         foreach (var member in GroupMember)
         {
-            member.EnableInteraction();
-            member.Collider.enabled = true;
+            member.gameObject.SetActive(true);
+            member.transform.parent = null;
         }
         ThisPickable.DisableInteraction();
+        Invoke(nameof(HideThisObj), float.MinValue);
+    }
+
+    private void HideThisObj()
+    {
+        this.gameObject.SetActive(false);
     }
 
     protected override void OnCurseDisabled()
@@ -36,9 +43,13 @@ public class GestProximity : GestaltObj
         base.OnCurseDisabled();
         for (int i = 0; i < GroupMember.Count; i++)
         {
-            GroupMember[i].DisableInteraction();
             GroupMember[i].transform.localPosition = _memberIdToInitialLocalPos[i];
         }
         ThisPickable.EnableInteraction();
+    }
+
+    public void AddMember(GameObject newMember)
+    {
+        GroupMember.Add(newMember);
     }
 }
