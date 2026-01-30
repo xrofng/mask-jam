@@ -9,7 +9,6 @@ public class PickableObj : Interactable
     private Transform _holdPoint;
     private Vector3 _velocity;
     private Transform _originalParent;
-    private Collider _col;
 
     public bool IsHeld => _held;
 
@@ -18,7 +17,6 @@ public class PickableObj : Interactable
         base.Awake();
 
         _originalParent = transform.parent;
-        TryGetComponent(out _col);
     }
 
     private void LateUpdate()
@@ -48,8 +46,8 @@ public class PickableObj : Interactable
 
         transform.SetParent(null); // prevents parent scale issues
 
-        if (_col != null)
-            _col.enabled = false; // avoids camera clipping
+        if (Collider != null)
+            Collider.enabled = false; // avoids camera clipping
     }
 
     private void Drop()
@@ -59,8 +57,8 @@ public class PickableObj : Interactable
 
         transform.SetParent(_originalParent);
 
-        if (_col != null)
-            _col.enabled = true;
+        if (Collider != null)
+            Collider.enabled = true;
     }
 
     private void FollowHoldPoint()

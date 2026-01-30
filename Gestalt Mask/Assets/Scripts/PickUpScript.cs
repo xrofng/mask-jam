@@ -102,6 +102,11 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
         {
             if (hit.collider == null) continue;
 
+            if (hit.collider.TryGetComponent<Interactable>(out var interactable) && interactable.IsEnabled == false)
+            {
+                continue;
+            }
+
             if (hit.distance < closestDistance)
             {
                 closestDistance = hit.distance;
@@ -136,7 +141,7 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
         {
             if (heldObj.TryGetComponent(out FusionableObj fusionable))
             {
-                fusionable.TryFusion();
+                fusionable.TryFusion(out int proxCount);
             }
         }
         heldObj = null; //undefine game object

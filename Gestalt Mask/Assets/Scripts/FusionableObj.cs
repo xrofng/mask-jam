@@ -1,20 +1,49 @@
+using NUnit.Framework;
+using System;
+using System.Collections;
 using UnityEngine;
 
-public class FusionableObj : BetterMonoBehaviour
+public class FusionableObj : BetterMonoBehaviour, IEventSubcriber<MaskController.EvsCurseChanged>
 {
     public LayerMask FusionableLayer;
     public float FusionRadius = 1;
     public bool TryFusionOnAwake = false;
+
+    private PickableObj _pickable;
+    public PickableObj Pickable
+    {
+        get
+        {
+            if (_pickable == null)
+                _pickable = GetComponent<PickableObj>();
+
+            return _pickable;
+        }
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        EventBus.AddSubcriber<MaskController.EvsCurseChanged>(this);
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        EventBus.RemoveSubcriber<MaskController.EvsCurseChanged>(this);
+    }
 
     protected override void Awake()
     {
         base.Awake();
     }
 
-    static readonly Collider[] _fusionBuffer = new Collider[32]; // increase if needed
+    Collider[] _fusionBuffer = new Collider[10]; // increase if needed
 
-    public void TryFusion()
+    public void TryFusion(out int proximityCount)
     {
+        _fusionBuffer = new Collider[10];
+        proximityCount = 0;
         int count = Physics.OverlapSphereNonAlloc(
             transform.position,
             FusionRadius,
@@ -33,8 +62,8 @@ public class FusionableObj : BetterMonoBehaviour
             sum.x += col.transform.position.x;
             sum.z += col.transform.position.z;
 
-            // disable object
-            col.gameObject.SetActive(false);
+            //// disable object
+            //col.gameObject.GetComponent<PickableObj>().HideObject();
         }
 
         Vector3 center = new Vector3(
@@ -47,13 +76,29 @@ public class FusionableObj : BetterMonoBehaviour
 
         // Example:
         // Spawn fused object here
-        GestProximity newProx =  FusionController.Instance.SpawnFusionMatter(center);
+        //StartCoroutine( SpawnNewFuseMatterRoutine(center, count));
+        GestProximity newProx = FusionController.Instance.SpawnFusionMatter(center);
         for (int i = 0; i < count; i++)
         {
-            newProx.AddMember(_fusionBuffer[i].gameObject);
+            //// disable object
+            FusionableObj fuse = _fusionBuffer[i].gameObject.GetComponent<FusionableObj>();
+            fuse.Pickable.HideObject();
+            newProx.AddMember(fuse);
             _fusionBuffer[i].transform.parent = newProx.transform;
         }
-        //Instantiate(fusedPrefab, center, Quaternion.identity);
+    }
+    IEnumerator SpawnNewFuseMatterRoutine(Vector3 center, int count)
+    {
+        yield return null;
+        GestProximity newProx = FusionController.Instance.SpawnFusionMatter(center);
+        for (int i = 0; i < count; i++)
+        {
+            //// disable object
+            FusionableObj fuse = _fusionBuffer[i].gameObject.GetComponent<FusionableObj>();
+            fuse.Pickable.HideObject();
+            newProx.AddMember(fuse);
+            _fusionBuffer[i].transform.parent = newProx.transform;
+        }
     }
 
     private void OnDrawGizmosSelected()
@@ -62,4 +107,14 @@ public class FusionableObj : BetterMonoBehaviour
         Gizmos.DrawSphere(transform.position, FusionRadius);
     }
 
+    public void OnEventBusTrigger(MaskController.EvsCurseChanged eventType)
+    {
+        if (eventType.NextCurse != MaskController.ECurse.Proximity)
+        {
+            if (Pickable.IsEnabled == true)
+            {
+                TryFusion(out int proxiCount);
+            }
+        }
+    }
 }

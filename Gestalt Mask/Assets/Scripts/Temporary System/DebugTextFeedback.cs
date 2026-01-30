@@ -32,9 +32,9 @@ public class DebugTextFeedback : BetterMonoBehaviour, IEventSubcriber<MaskContro
     {
         Debug.Log("Active bus");
 
-        StopAllCoroutines();
+        //StopAllCoroutines();
 
-        StartCoroutine(effectRoutine(eventType));
+        //StartCoroutine(effectRoutine(eventType));
 
     }
 
