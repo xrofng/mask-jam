@@ -37,6 +37,7 @@ public class GestaltObj : BetterMonoBehaviour, IEventSubcriber<EvsCurseChanged>
     }
 
     protected virtual ECurse TargetCurse => ECurse.None;
+    public ECurse changedCurse => TargetCurse;
 
     /// <summary>
     /// Called when the target curse becomes active.

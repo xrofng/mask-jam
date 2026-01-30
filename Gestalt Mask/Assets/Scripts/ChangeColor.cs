@@ -6,6 +6,7 @@ public class ChangeColor : BetterMonoBehaviour, IEventSubcriber<EvsCurseChanged>
 {
     private Renderer _renderer;
     private GlobalColStorManager colStor;
+    private GestaltObj gestaltObj;
 
     //Subscribe + unsub from CurseChange event
     protected override void OnEnable()
@@ -13,6 +14,7 @@ public class ChangeColor : BetterMonoBehaviour, IEventSubcriber<EvsCurseChanged>
         base.OnEnable();
         _renderer = GetComponent<Renderer>();
         EventBus.AddSubcriber<EvsCurseChanged>(this);
+        gestaltObj = GetComponent<GestaltObj>();
     }
 
     protected override void OnDisable()
@@ -28,27 +30,27 @@ public class ChangeColor : BetterMonoBehaviour, IEventSubcriber<EvsCurseChanged>
     //On curse change event:
     public void OnEventBusTrigger(EvsCurseChanged eventType)
     {
-        if(eventType.NextCurse == ECurse.None)
+        if(gestaltObj.changedCurse == ECurse.None)
         {
             _renderer.material.SetColor("_BaseColor", colStor.none_base);
         }
-        else if(eventType.NextCurse == ECurse.Similarity)
+        else if(gestaltObj.changedCurse == ECurse.Similarity)
         {
             _renderer.material.SetColor("_BaseColor", colStor.similarity_base);
         }
-        else if (eventType.NextCurse == ECurse.Proximity)
+        else if (gestaltObj.changedCurse == ECurse.Proximity)
         {
             _renderer.material.SetColor("_BaseColor", colStor.proximity_base);
         }
-        else if (eventType.NextCurse == ECurse.Continuance)
+        else if (gestaltObj.changedCurse == ECurse.Continuance)
         {
             _renderer.material.SetColor("_BaseColor", colStor.continuance_base);
         }
-        else if (eventType.NextCurse == ECurse.Closure)
+        else if (gestaltObj.changedCurse == ECurse.Closure)
         {
             _renderer.material.SetColor("_BaseColor", colStor.closure_base);
         }
-        else if (eventType.NextCurse == ECurse.Invariance)
+        else if (gestaltObj.changedCurse == ECurse.Invariance)
         {
             _renderer.material.SetColor("_BaseColor", colStor.invariance_base);
         }
