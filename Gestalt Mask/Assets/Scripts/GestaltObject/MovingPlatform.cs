@@ -142,8 +142,10 @@ public class MovingPlatform : GestaltObj
         }
         else
         {
+            Debug.Log($"{gameObject.name} = {movementPos.Count}");
             transform.position = movementPos[0].position;
             target = movementPos[1];
         }
+
     }
 }
