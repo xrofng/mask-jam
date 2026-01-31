@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+
 public class CurseScroll : BetterMonoBehaviour
 {
-
-
     [SerializeField] float disableTime = 3;
     [SerializeField] MaskController maskController;
+    [SerializeField] CanvasGroup CanvasGroup;
     [SerializeField]
     List<eCurseToSprite> eCurseToSprites = new List<eCurseToSprite>()
     {
@@ -67,10 +67,7 @@ public class CurseScroll : BetterMonoBehaviour
             boxPos.Add(boxPosition[number].position);
             curseBox_Uis[number].DisActiveEffect();
         }
-        foreach (var i in curseBox_Uis)
-        {
-            i.gameObject.SetActive(false);
-        }
+        CanvasGroup.alpha = 0;
     }
 
     void moveIndex(int direction)
@@ -96,16 +93,9 @@ public class CurseScroll : BetterMonoBehaviour
 
     IEnumerator routine()
     {
-
-        foreach (var i in curseBox_Uis)
-        {
-            i.gameObject.SetActive(true);
-        }
+        CanvasGroup.alpha = 1;
         yield return new WaitForSeconds(disableTime);
-        foreach (var i in curseBox_Uis)
-        {
-            i.gameObject.SetActive(false);
-        }
+        CanvasGroup.alpha = 0;
     }
 
     MaskController.ECurse previosActiveCurse = MaskController.ECurse.None;

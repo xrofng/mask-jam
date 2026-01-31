@@ -17,6 +17,10 @@ public class GestProximity : GestaltObj
         base.OnCurseEnabled();
         foreach (FusionableObj member in GroupMember)
         {
+            if(Vector3.Distance(member.transform.position, this.transform.position ) > 2)
+            {
+                member.transform.position = Random.insideUnitSphere + transform.position;
+            }
             member.Pickable.ShowObject();
             member.transform.parent = null;
         }
@@ -27,6 +31,7 @@ public class GestProximity : GestaltObj
     private void HideThisObj()
     {
         HideObject();
+        Destroy(this.gameObject);
     }
 
     protected override void OnCurseDisabled()
