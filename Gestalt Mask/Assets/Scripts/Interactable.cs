@@ -107,9 +107,14 @@ public abstract class Interactable : BetterMonoBehaviour
         foreach (var renderer in Renderers)
             renderer.enabled = enabled;
 
-        foreach (var col in Colliders)
-            col.enabled = enabled;
+        SetColliderActive(enabled);
+        SetRigibody(enabled);
 
+        isEnabled = enabled;
+    }
+
+    public void SetRigibody(bool enabled)
+    {
         foreach (var rb in Rigidbodies)
         {
             rb.useGravity = enabled;
@@ -120,8 +125,12 @@ public abstract class Interactable : BetterMonoBehaviour
                 rb.angularVelocity = Vector3.zero;
             }
         }
+    }
 
-        isEnabled = enabled;
+    public void SetColliderActive(bool enabled)
+    {
+        foreach (var col in Colliders)
+            col.enabled = enabled;
     }
 
     public void ShowObject()

@@ -28,37 +28,8 @@ public class PickableObj : Interactable
 
     protected override void Interact(PlayerInteractor interactor)
     {
-        if (_held)
-        {
-            Drop();
-            return;
-        }
-
-        Pick(interactor);
-    }
-
-    private void Pick(PlayerInteractor interactor)
-    {
-        if (_held) return;
-
-        _holdPoint = interactor.HoldPoint;
-        _held = true;
-
-        transform.SetParent(null); // prevents parent scale issues
-
-        if (Collider != null)
-            Collider.enabled = false; // avoids camera clipping
-    }
-
-    private void Drop()
-    {
-        _held = false;
-        _holdPoint = null;
-
-        transform.SetParent(_originalParent);
-
-        if (Collider != null)
-            Collider.enabled = true;
+        // no need implementation
+        // let PickUpScript to their job
     }
 
     private void FollowHoldPoint()

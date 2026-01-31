@@ -1,0 +1,8 @@
+newmtl Mat_Grey
+Kd 0.6039216 0.6078432 0.6078432
+d 1
+
+newmtl Mat_DarkGrey
+Kd 0.3301886 0.3301886 0.3301886
+d 1
+

@@ -30,5 +30,5 @@ public class GlobalColStorManager : MonoBehaviour
     [SerializeField] Color _invariance_base;
     public Color invariance_base => _invariance_base;
 
-
+    public Color[] WallColors;
 }
