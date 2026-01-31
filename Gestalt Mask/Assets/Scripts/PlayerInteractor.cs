@@ -1,44 +1,83 @@
 ﻿using UnityEngine;
 
-public class PlayerInteractor : MonoBehaviour
+public class PlayerInteractor : BetterMonoBehaviour
 {
     [SerializeField] private float ScanDistance = 3f;
+    public float interactRange = 5f; //how far the player can pickup the object from
+    public LayerMask InteractLayer;
 
     [Header("Obj Ref")]
-    [SerializeField] private Camera cam;
-    public Transform HoldPoint;
+    public Transform CameraTransform;
 
     private Interactable _current;
+    private RaycastHit _currentHit;
+    private bool _isFound;
+    public Interactable FacingInteractable => _current;
 
-    private void Update()
+    private PickUpScript _pickUp;
+    public PickUpScript PickUp
     {
-        Scan();
+        get
+        {
+            if (_pickUp == null)
+                _pickUp = GetComponent<PickUpScript>();
 
-        if (Input.GetKeyDown(KeyCode.E) && _current != null)
-            _current.TryInteract(this);
+            return _pickUp;
+        }
     }
 
-    private void Scan()
+    protected override void Update()
     {
-        Ray ray = new Ray(cam.transform.position, cam.transform.forward);
+        base.Update();
+        DoSphereRay(out _current, out _currentHit, out _isFound);
 
-        RaycastHit[] hits = Physics.RaycastAll(ray, ScanDistance);
+        if (_isFound)
+        {
+            // event to update ui
+        }
 
-        // VERY IMPORTANT → sort by distance
-        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+        if (Input.GetKeyDown(KeyCode.E) && _isFound)
+        {
+            _current.TryInteract(this);
+        }
+    }
 
-        _current = null;
+    public void DoSphereRay(out Interactable current, out RaycastHit closestHit, out bool found)
+    {
+        current = null;
+        Ray ray = new Ray(
+                            transform.position,
+                            CameraTransform.forward
+                        );
 
+        float radius = 0.35f;
+        RaycastHit[] hits = Physics.SphereCastAll(
+            ray,
+            radius,
+            interactRange,
+            InteractLayer,
+            QueryTriggerInteraction.Ignore
+        );
+
+        closestHit = default;
+        float closestDistance = float.MaxValue;
+        found = false;
         foreach (var hit in hits)
         {
-            if (!hit.collider.TryGetComponent(out Interactable interactable))
-                continue;
+            if (hit.collider == null) continue;
 
-            if (!interactable.IsEnabled)
+            if (hit.collider.TryGetComponent<Interactable>(out var interactable) && interactable.IsEnabled == false)
+            {
                 continue;
+            }
 
-            _current = interactable;
-            break;
+            if (hit.distance < closestDistance)
+            {
+                closestDistance = hit.distance;
+                closestHit = hit;
+                found = true;
+                current = interactable;
+            }
         }
     }
 }

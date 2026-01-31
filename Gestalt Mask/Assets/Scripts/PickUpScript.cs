@@ -7,6 +7,7 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
     public Collider playerCollider;
     public Transform holdPos;
     public Transform CameraTransform;
+    public PlayerInteractor PlayerInteractor;
     public LayerMask PickableLayer;
     public string HoldLayerName = "Holding";
     public string PickLayerName = "Pickable";
@@ -14,12 +15,14 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
     public float throwForce = 500f; //force at which the object is thrown at
     public float pickUpRange = 5f; //how far the player can pickup the object from
     private float rotationSensitivity = 1f; //how fast/slow the object is rotated in relation to mouse movement
-    private GameObject heldObj; //object which we pick up
     private Rigidbody heldObjRb; //rigidbody of object we pick up
     private bool canDrop = true; //this is needed so we don't throw/drop object when rotating the object
     int holdingLayer;
     int pickLayer;
     private MaskController.ECurse currMask;
+
+    private PickableObj heldObj; //object which we pick up
+    public PickableObj Holding => heldObj;
 
     protected override void OnEnable()
     {
@@ -42,24 +45,23 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
         holdingLayer = LayerMask.NameToLayer(HoldLayerName); //if your holdLayer is named differently make sure to change this ""
         pickLayer = LayerMask.NameToLayer(PickLayerName);
     }
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         if (Input.GetKeyDown(KeyCode.E)) //change E to whichever key you want to press to pick up
         {
             if (heldObj == null)
             {
-                RaycastHit closestHit;
-                bool found;
-                DoSphereRay(out closestHit, out found);
-
-                if (found)
+                Debug.Log(PlayerInteractor.FacingInteractable);
+                if (PlayerInteractor.FacingInteractable &&
+                    PlayerInteractor.FacingInteractable.TryGetComponent(out PickableObj pickableObj))
                 {
-                    PickUpObject(closestHit.transform.gameObject);
+                    PickUpObject(pickableObj.transform.gameObject);
                 }
             }
             else
             {
-                if(canDrop == true)
+                if (canDrop == true)
                 {
                     StopClipping(); //prevents object from clipping through walls
                     DropObject();
@@ -79,61 +81,34 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
         }
     }
 
-    private void DoSphereRay(out RaycastHit closestHit, out bool found)
-    {
-        Ray ray = new Ray(
-                            transform.position,
-                            CameraTransform.forward
-                        );
-
-        float radius = 0.35f; 
-        RaycastHit[] hits = Physics.SphereCastAll(
-            ray,
-            radius,
-            pickUpRange,
-            PickableLayer,
-            QueryTriggerInteraction.Ignore
-        );
-
-        closestHit = default;
-        float closestDistance = float.MaxValue;
-        found = false;
-        foreach (var hit in hits)
-        {
-            if (hit.collider == null) continue;
-
-            if (hit.collider.TryGetComponent<Interactable>(out var interactable) && interactable.IsEnabled == false)
-            {
-                continue;
-            }
-
-            if (hit.distance < closestDistance)
-            {
-                closestDistance = hit.distance;
-                closestHit = hit;
-                found = true;
-            }
-        }
-    }
+    
 
     void PickUpObject(GameObject pickUpObj)
     {
         if (pickUpObj.GetComponent<Rigidbody>()) //make sure the object has a RigidBody
         {
-            heldObj = pickUpObj; //assign heldObj to the object that was hit by the raycast (no longer == null)
+            heldObj = pickUpObj.GetComponent<PickableObj>(); //assign heldObj to the object that was hit by the raycast (no longer == null)
             heldObjRb = pickUpObj.GetComponent<Rigidbody>(); //assign Rigidbody
             heldObjRb.isKinematic = true;
             heldObjRb.transform.parent = holdPos.transform; //parent object to holdposition
-            heldObj.layer = holdingLayer; //change the object layer to the holdLayer
+            heldObj.gameObject.layer = holdingLayer; //change the object layer to the holdLayer
             //make sure object doesnt collide with player, it can cause weird bugs
             Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), playerCollider, true);
         }
     }
+
+    public PickableObj ForceDrop()
+    {
+        PickableObj hold = Holding;
+        DropObject();
+        return hold;
+    }
+
     void DropObject()
     {
         //re-enable collision with player
         Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), playerCollider, false);
-        heldObj.layer = pickLayer; //object assigned back to default layer
+        heldObj.gameObject.layer = pickLayer; //object assigned back to default layer
         heldObjRb.isKinematic = false;
         heldObj.transform.parent = null; //unparent object
 
@@ -180,7 +155,7 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
     {
         //same as drop function, but add force to object before undefining it
         Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), playerCollider, false);
-        heldObj.layer = PickableLayer;
+        heldObj.gameObject.layer = PickableLayer;
         heldObjRb.isKinematic = false;
         heldObj.transform.parent = null;
         heldObjRb.AddForce(transform.forward * throwForce);

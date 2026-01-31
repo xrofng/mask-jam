@@ -39,32 +39,33 @@ public class ChangeColor : BetterMonoBehaviour, IEventSubcriber<EvsCurseChanged>
     public void OnEventBusTrigger(EvsCurseChanged eventType)
     {
         colStor = GlobalColStorManager.Instance;
-        if (gestaltObj.changedCurse == ECurse.None)
-        {
-            _renderer.material.SetColor("_BaseColor", colStor.none_base);
-        }
-        else if(gestaltObj.changedCurse == ECurse.Similarity)
-        {
-            _renderer.material.SetColor("_BaseColor", colStor.similarity_base);
-        }
-        else if (gestaltObj.changedCurse == ECurse.Proximity)
-        {
-            _renderer.material.SetColor("_BaseColor", colStor.proximity_base);
-        }
-        else if (gestaltObj.changedCurse == ECurse.Continuance)
-        {
-            Debug.Log(name + " err " + _renderer);
-            Debug.Log(name + " err " + _renderer.material);
-            Debug.Log(name + " err " + colStor);
-            _renderer.material.SetColor("_BaseColor", colStor.continuance_base);
-        }
-        else if (gestaltObj.changedCurse == ECurse.Closure)
-        {
-            _renderer.material.SetColor("_BaseColor", colStor.closure_base);
-        }
-        else if (gestaltObj.changedCurse == ECurse.Invariance)
-        {
-            _renderer.material.SetColor("_BaseColor", colStor.invariance_base);
-        }
+        _renderer.material.SetColor("_BaseColor", colStor.WallColors[(int)eventType.NextCurse]);
+        //if (gestaltObj.changedCurse == ECurse.None)
+        //{
+        //    _renderer.material.SetColor("_BaseColor", colStor.none_base);
+        //}
+        //else if(gestaltObj.changedCurse == ECurse.Similarity)
+        //{
+        //    _renderer.material.SetColor("_BaseColor", colStor.similarity_base);
+        //}
+        //else if (gestaltObj.changedCurse == ECurse.Proximity)
+        //{
+        //    _renderer.material.SetColor("_BaseColor", colStor.proximity_base);
+        //}
+        //else if (gestaltObj.changedCurse == ECurse.Continuance)
+        //{
+        //    Debug.Log(name + " err " + _renderer);
+        //    Debug.Log(name + " err " + _renderer.material);
+        //    Debug.Log(name + " err " + colStor);
+        //    _renderer.material.SetColor("_BaseColor", colStor.continuance_base);
+        //}
+        //else if (gestaltObj.changedCurse == ECurse.Closure)
+        //{
+        //    _renderer.material.SetColor("_BaseColor", colStor.closure_base);
+        //}
+        //else if (gestaltObj.changedCurse == ECurse.Invariance)
+        //{
+        //    _renderer.material.SetColor("_BaseColor", colStor.invariance_base);
+        //}
     }
 }
