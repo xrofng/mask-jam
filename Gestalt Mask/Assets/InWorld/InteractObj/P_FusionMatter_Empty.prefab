@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8934813867003862806}
   - component: {fileID: 5657481822225842371}
   - component: {fileID: 1417238611770628076}
-  - component: {fileID: 8778228338224743387}
+  - component: {fileID: 883764076712493744}
   m_Layer: 6
   m_Name: P_FusionMatter_Empty
   m_TagString: Untagged
@@ -151,7 +151,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &8778228338224743387
+--- !u!114 &883764076712493744
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -160,7 +160,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5218549155333434166}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bbcab890d690aa46a498b32a42e72b8, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ff4fb03d9f1f614b8e98088e1592959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   prompt: Interact
