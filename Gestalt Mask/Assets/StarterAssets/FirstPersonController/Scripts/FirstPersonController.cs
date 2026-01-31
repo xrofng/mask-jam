@@ -64,10 +64,6 @@ namespace StarterAssets
         private float _jumpTimeoutDelta;
         private float _fallTimeoutDelta;
 
-        private Vector3 externalForce;
-        float externalForceSpeed;
-
-
 #if ENABLE_INPUT_SYSTEM
         private PlayerInput _playerInput;
 #endif
@@ -84,10 +80,28 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM
                 return _playerInput.currentControlScheme == "KeyboardMouse";
 #else
-				return false;
+                return false;
 #endif
             }
         }
+
+        // =========================
+        // Moving Platform Support
+        // =========================
+        [Header("Moving Platform")]
+        [Tooltip("Layers that count as moving platforms (put your platforms on these layers)")]
+        [SerializeField] private LayerMask PlatformLayers;
+
+        [Tooltip("How far below the player to check for platform (should be >= controller step + small buffer)")]
+        [SerializeField] private float PlatformCheckDistance = 1.2f;
+
+        [Tooltip("If true, player will be carried by platform rotation as well")]
+        [SerializeField] private bool ApplyPlatformRotation = true;
+
+        private Transform _activePlatform;
+        private Vector3 _lastPlatformPos;
+        private Quaternion _lastPlatformRot;
+        private bool _onPlatform;
 
         private void Awake()
         {
@@ -102,10 +116,11 @@ namespace StarterAssets
         {
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
+
 #if ENABLE_INPUT_SYSTEM
             _playerInput = GetComponent<PlayerInput>();
 #else
-			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
+            Debug.LogError("Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
 
             // reset our timeouts on start
@@ -115,8 +130,15 @@ namespace StarterAssets
 
         private void Update()
         {
-            JumpAndGravity();
+            // IMPORTANT ORDER:
+            // 1) grounded check
+            // 2) platform tracking (needs grounded)
+            // 3) gravity/jump
+            // 4) move (adds platform delta)
             GroundedCheck();
+            UpdatePlatformTracking();
+
+            JumpAndGravity();
             Move();
         }
 
@@ -154,14 +176,77 @@ namespace StarterAssets
             }
         }
 
+        // =========================
+        // Moving Platform Logic
+        // =========================
+        private void UpdatePlatformTracking()
+        {
+            // Only track platform when grounded
+            if (!Grounded)
+            {
+                ClearPlatform();
+                return;
+            }
+
+            Vector3 origin = transform.position + Vector3.up * 0.1f;
+            float radius = Mathf.Max(0.05f, GroundedRadius * 0.9f);
+
+            if (Physics.SphereCast(origin, radius, Vector3.down, out RaycastHit hit, PlatformCheckDistance, PlatformLayers, QueryTriggerInteraction.Ignore))
+            {
+                Transform newPlatform = hit.collider.transform;
+
+                if (_activePlatform != newPlatform)
+                {
+                    _activePlatform = newPlatform;
+                    _lastPlatformPos = _activePlatform.position;
+                    _lastPlatformRot = _activePlatform.rotation;
+                }
+
+                _onPlatform = true;
+            }
+            else
+            {
+                ClearPlatform();
+            }
+        }
+
+        private Vector3 GetPlatformDeltaDisplacement()
+        {
+            if (!_onPlatform || _activePlatform == null) return Vector3.zero;
+
+            Vector3 deltaPos = _activePlatform.position - _lastPlatformPos;
+
+            Vector3 deltaFromRot = Vector3.zero;
+            if (ApplyPlatformRotation)
+            {
+                Quaternion deltaRot = _activePlatform.rotation * Quaternion.Inverse(_lastPlatformRot);
+
+                // Rotate player's offset around platform pivot
+                Vector3 toPlayer = transform.position - _activePlatform.position;
+                Vector3 rotatedOffset = deltaRot * toPlayer;
+                Vector3 rotatedWorldPos = _activePlatform.position + rotatedOffset;
+
+                deltaFromRot = rotatedWorldPos - transform.position;
+            }
+
+            // Update caches
+            _lastPlatformPos = _activePlatform.position;
+            _lastPlatformRot = _activePlatform.rotation;
+
+            return deltaPos + deltaFromRot;
+        }
+
+        private void ClearPlatform()
+        {
+            _onPlatform = false;
+            _activePlatform = null;
+        }
+
         private void Move()
         {
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
-            // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
-
-            // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is no input, set the target speed to 0
             if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
@@ -174,11 +259,7 @@ namespace StarterAssets
             // accelerate or decelerate to target speed
             if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
             {
-                // creates curved result rather than a linear one giving a more organic speed change
-                // note T in Lerp is clamped, so we don't need to clamp our speed
                 _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
-
-                // round speed to 3 decimal places
                 _speed = Mathf.Round(_speed * 1000f) / 1000f;
             }
             else
@@ -189,36 +270,22 @@ namespace StarterAssets
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
 
-            // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-            // if there is a move input rotate player when the player is moving
+            // rotate move direction relative to player facing
             if (_input.move != Vector2.zero)
             {
-                // move
                 inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
             }
 
+            // Your external forces (displacement per frame). If you store velocity instead, multiply by deltaTime.
+            Vector3 externalForceValue = Vector3.zero;
 
-            float currentSpeed = 0;
-            Vector3 externalForceValue = new Vector3();
+            // platform displacement (delta position / rotation)
+            Vector3 platformDelta = GetPlatformDeltaDisplacement();
 
-            if (externalForceSpeed != 0)
-            {
-                currentSpeed = Mathf.Abs(_speed / externalForceSpeed);
-                externalForceValue = externalForce * externalForceSpeed * Time.deltaTime;
-            }
-            else
-            {
-                currentSpeed = _speed;
-            }
+            Vector3 horizontalMove = inputDirection.normalized * (_speed * Time.deltaTime);
+            Vector3 verticalMove = new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime;
 
-            if (externalForce != Vector3.zero)
-            {
-                _controller.Move(externalForceValue + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
-                return;
-            }
-
-            //  if (inputDirection == Vector3.zero && _verticalVelocity == 0 && externalForce == Vector3.zero) return;
-            _controller.Move(inputDirection.normalized * (currentSpeed * Time.deltaTime) + externalForceValue + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+            _controller.Move(platformDelta + horizontalMove + externalForceValue + verticalMove);
         }
 
         private void JumpAndGravity()
@@ -262,7 +329,7 @@ namespace StarterAssets
                 _input.jump = false;
             }
 
-            // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
+            // apply gravity over time if under terminal
             if (_verticalVelocity < _terminalVelocity)
             {
                 _verticalVelocity += Gravity * Time.deltaTime;
@@ -284,17 +351,7 @@ namespace StarterAssets
             if (Grounded) Gizmos.color = transparentGreen;
             else Gizmos.color = transparentRed;
 
-            // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
             Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
         }
-
-        public void setExternalForce(Vector3 force, float externalForceSpeed)
-        {
-            externalForce = force;
-            this.externalForceSpeed = externalForceSpeed;
-        }
-
     }
 }
-
-
