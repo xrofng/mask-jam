@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using static MaskController;
 
 public class GestaltObj : BetterMonoBehaviour, IEventSubcriber<EvsCurseChanged>
@@ -6,9 +7,50 @@ public class GestaltObj : BetterMonoBehaviour, IEventSubcriber<EvsCurseChanged>
     protected virtual ECurse TargetCurse => ECurse.None;
     public ECurse changedCurse => TargetCurse;
 
+    #region
+    private MeshRenderer[] _renderers;
+    private MeshRenderer[] Renderers
+    {
+        get
+        {
+            if (_renderers == null)
+            {
+                _renderers = GetComponentsInChildren<MeshRenderer>(true);
+            }
+
+            return _renderers;
+        }
+    }
+
+    private Collider[] _colliders;
+    private int subscribeDelay = 1;
+
+    private Collider[] Colliders
+    {
+        get
+        {
+            if (_colliders == null)
+            {
+                _colliders = GetComponentsInChildren<Collider>(true);
+            }
+
+            return _colliders;
+        }
+    }
+    #endregion
+
     protected override void OnEnable()
     {
         base.OnEnable();
+        StartCoroutine(SubscribeRoutine(subscribeDelay));
+    }
+
+    IEnumerator SubscribeRoutine(int frameDelay)
+    {
+        for (int i  = 0; i < frameDelay; i++)
+        {
+            yield return null;
+        }
         EventBus.AddSubcriber<EvsCurseChanged>(this);
     }
 
@@ -53,5 +95,26 @@ public class GestaltObj : BetterMonoBehaviour, IEventSubcriber<EvsCurseChanged>
     protected virtual void OnCurseDisabled()
     {
         Debug.Log($"{name} stopped reacting to {TargetCurse}");
+    }
+
+    private void SetObjectState(bool en)
+    {
+        foreach (var renderer in Renderers)
+            renderer.enabled = en;
+
+        foreach (var col in Colliders)
+            col.enabled = en;
+
+        enabled = en;
+    }
+
+    public void ShowObject()
+    {
+        SetObjectState(true);
+    }
+
+    public void HideObject()
+    {
+        SetObjectState(false);
     }
 }

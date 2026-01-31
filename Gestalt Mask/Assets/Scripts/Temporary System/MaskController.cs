@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class MaskController : BetterMonoBehaviour
 {
     public enum ECurse
@@ -48,30 +46,8 @@ public class MaskController : BetterMonoBehaviour
     protected override void Update()
     {
         base.Update();
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            SetCurse(ECurse.None);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2)) 
-        {
-            SetCurse(ECurse.Proximity);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            SetCurse(ECurse.Similarity);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            SetCurse(ECurse.Continuance);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            SetCurse(ECurse.Closure);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            SetCurse(ECurse.Invariance);
-        }
+
+
     }
 }
 

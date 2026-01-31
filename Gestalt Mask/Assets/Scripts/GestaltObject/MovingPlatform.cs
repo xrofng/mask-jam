@@ -15,7 +15,6 @@ public class MovingPlatform : GestaltObj
 
 
     int currentIndex = 0;
-    StarterAssets.FirstPersonController playerController;
     protected override MaskController.ECurse TargetCurse
         => MaskController.ECurse.Continuance;
 
@@ -57,10 +56,6 @@ public class MovingPlatform : GestaltObj
             speed * Time.deltaTime
         );
 
-        if (playerController != null)
-        {
-            playerController.setExternalForce(direction, speed);
-        }
 
 
         // Distance check (ignore Y if locked)
@@ -88,31 +83,8 @@ public class MovingPlatform : GestaltObj
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            if (other.gameObject.TryGetComponent<StarterAssets.FirstPersonController>(out StarterAssets.FirstPersonController control))
-            {
-                playerController = control;
-            }
-        }
-    }
 
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-
-            if (other.gameObject.TryGetComponent<StarterAssets.FirstPersonController>(out StarterAssets.FirstPersonController control))
-            {
-                playerController.setExternalForce(Vector3.zero, 0);
-                playerController = null;
-            }
-        }
-
-    }
 
     protected override void OnCurseEnabled()
     {
@@ -125,25 +97,13 @@ public class MovingPlatform : GestaltObj
     {
 
 
-        Vector3 localTransform = new Vector3();
-        if (playerController != null)
-        {
-            playerController.enabled = false;
-            localTransform = this.transform.position - playerController.transform.position;
-        }
+
+
 
         transform.position = movementPos[0].position;
-
-        if (playerController != null)
-        {
-            playerController.transform.position = this.transform.position + new Vector3(0, localTransform.y, 0);
-            playerController.enabled = true;
-
-        }
 
 
 
         target = movementPos[1];
-
     }
 }

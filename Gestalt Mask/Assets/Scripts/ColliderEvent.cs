@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-
 public class ColliderEvent : MonoBehaviour
 {
 
@@ -32,6 +31,7 @@ public class ColliderEvent : MonoBehaviour
             foreach (var script in allScript)
             {
                 script.enabled = true;
+             
             }
         }
     }

@@ -1,23 +1,30 @@
+using MoreMountains.Feedbacks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 public class DebugTextFeedback : BetterMonoBehaviour, IEventSubcriber<MaskController.EvsCurseChanged>
 {
     [SerializeField] List<objectPairWithEnum<MaskController.ECurse>> frames = new List<objectPairWithEnum<MaskController.ECurse>>();
-    [SerializeField] UnityEvent onOpen;
-    [SerializeField] UnityEvent onClose;
+    [SerializeField] MoreMountains.Feedbacks.MMF_Player onOpen;
+    [SerializeField] MoreMountains.Feedbacks.MMF_Player onClose;
     [SerializeField] float openDelay;
     [SerializeField] float closeDelay;
+    [SerializeField] float deselectDelay;
     bool canCancel;
     bool isOpen;
+    bool isFinishEffect;
     objectPairWithEnum<MaskController.ECurse> previosOpenItem;
+    Coroutine coroutine;
 
+    objectPairWithEnum<MaskController.ECurse> desActivePlayEffect;
+    objectPairWithEnum<MaskController.ECurse> activePlayEffect;
 
     protected override void OnEnable()
     {
+
+
         base.OnEnable();
         EventBusRegister.EventBusSubcribe(this);
     }
@@ -28,13 +35,36 @@ public class DebugTextFeedback : BetterMonoBehaviour, IEventSubcriber<MaskContro
         EventBusRegister.EventBusUnscribe(this);
     }
 
+
+
     public void OnEventBusTrigger(MaskController.EvsCurseChanged eventType)
     {
         Debug.Log("Active bus");
 
-        StopAllCoroutines();
+        if (previosOpenItem != null && eventType.NextCurse == previosOpenItem.Type) return;
 
-        StartCoroutine(effectRoutine(eventType));
+
+        if (coroutine != null)
+        {
+            if (desActivePlayEffect != null)
+            {
+                desActivePlayEffect.OnDeselect.StopFeedbacks();
+                desActivePlayEffect.TriggerToNormalScale();
+                //reset the normal scale
+            }
+
+            if (activePlayEffect != null)
+            {
+                activePlayEffect.OnSelect.StopFeedbacks();
+                activePlayEffect.TriggerToNormalScale();
+                //reset To Normal
+            }
+
+            StopAllCoroutines();
+        }
+
+
+        coroutine = StartCoroutine(effectRoutine(eventType));
 
     }
 
@@ -42,7 +72,7 @@ public class DebugTextFeedback : BetterMonoBehaviour, IEventSubcriber<MaskContro
     {
         if (isOpen == false)
         {
-            onOpen?.Invoke();
+            onOpen.PlayFeedbacks();
             yield return new WaitForSeconds(openDelay);
         }
 
@@ -52,8 +82,12 @@ public class DebugTextFeedback : BetterMonoBehaviour, IEventSubcriber<MaskContro
         {
             if (previosOpenItem != null)
             {
+
                 previosOpenItem.TriggerOnDeselect();
+                desActivePlayEffect = previosOpenItem;
             }
+
+
             previosOpenItem = null;
         }
         else
@@ -61,10 +95,14 @@ public class DebugTextFeedback : BetterMonoBehaviour, IEventSubcriber<MaskContro
             if (previosOpenItem != null)
             {
                 previosOpenItem.TriggerOnDeselect();
+                desActivePlayEffect = previosOpenItem;
+                yield return new WaitForSeconds(deselectDelay);
             }
             // TODO I-pun
-            //previosOpenItem = frames.FirstOrDefault(i => i.Type == eventType.NextCurse);
-            //previosOpenItem.TriggerOnSelect();
+            previosOpenItem = frames.FirstOrDefault(i => i.Type == eventType.NextCurse);
+            previosOpenItem.TriggerOnSelect();
+            activePlayEffect = previosOpenItem;
+
         }
 
 
@@ -72,10 +110,9 @@ public class DebugTextFeedback : BetterMonoBehaviour, IEventSubcriber<MaskContro
 
         yield return new WaitForSeconds(closeDelay);
 
-        onClose?.Invoke();
+        onClose.PlayFeedbacks();
         isOpen = false;
-
-
+        coroutine = null;
     }
 
 
@@ -89,20 +126,28 @@ public class DebugTextFeedback : BetterMonoBehaviour, IEventSubcriber<MaskContro
 [System.Serializable]
 public class objectPairWithEnum<T> where T : Enum
 {
+    [SerializeField] RectTransform mainFreme;
     [SerializeField] T type;
-    [SerializeField] UnityEvent onSelect;
-    [SerializeField] UnityEvent onDeselect;
+    [SerializeField] MoreMountains.Feedbacks.MMF_Player onSelect;
+    [SerializeField] MoreMountains.Feedbacks.MMF_Player onDeselect;
+
+    public void TriggerToNormalScale()
+    {
+        mainFreme.transform.localScale = Vector3.one;
+    }
 
     public void TriggerOnSelect()
     {
-        onSelect?.Invoke();
+        OnSelect.PlayFeedbacks();
     }
 
     public void TriggerOnDeselect()
     {
-        onDeselect?.Invoke();
+        OnDeselect.PlayFeedbacks();
     }
 
     public T Type { get => type; set => type = value; }
+    public MMF_Player OnSelect { get => onSelect; set => onSelect = value; }
+    public MMF_Player OnDeselect { get => onDeselect; set => onDeselect = value; }
 }
 
