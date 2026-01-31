@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.EvsCurseChanged>
 {
@@ -80,7 +78,6 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
         }
     }
 
-    
 
     void PickUpObject(GameObject pickUpObj)
     {

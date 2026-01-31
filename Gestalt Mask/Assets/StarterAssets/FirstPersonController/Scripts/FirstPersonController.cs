@@ -85,6 +85,8 @@ namespace StarterAssets
             }
         }
 
+        public bool EnableMove = true;
+
         // =========================
         // Moving Platform Support
         // =========================
@@ -244,6 +246,7 @@ namespace StarterAssets
 
         private void Move()
         {
+            if (EnableMove == false) return;
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 

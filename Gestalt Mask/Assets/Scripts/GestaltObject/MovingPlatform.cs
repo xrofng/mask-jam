@@ -31,11 +31,13 @@ public class MovingPlatform : GestaltObj
     {
         currentPower = false;
     }
+    StarterAssets.FirstPersonController playerControl;
 
     protected override void Awake()
     {
         if (movementPos.Count == 0) return;
 
+        playerControl = FindAnyObjectByType<StarterAssets.FirstPersonController>();
         transform.position = movementPos[0].position;
         currentIndex = 1 % movementPos.Count;
         target = movementPos[currentIndex];
@@ -102,7 +104,17 @@ public class MovingPlatform : GestaltObj
     }
 
 
+    bool isPlayerIn = false;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player") == false) return;
+        isPlayerIn = true;
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        isPlayerIn = false;
+    }
 
     protected override void OnCurseEnabled()
     {
@@ -113,15 +125,18 @@ public class MovingPlatform : GestaltObj
 
     protected override void OnCurseDisabled()
     {
-
-
-
-
-
-        transform.position = movementPos[0].position;
-
-
-
-        target = movementPos[1];
+        if (isPlayerIn)
+        {
+            playerControl.EnableMove = false;
+            transform.position = movementPos[0].position;
+            playerControl.transform.position = movementPos[0].position;
+            playerControl.EnableMove = true;
+            target = movementPos[1];
+        }
+        else
+        {
+            transform.position = movementPos[0].position;
+            target = movementPos[1];
+        }
     }
 }
