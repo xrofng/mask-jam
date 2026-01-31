@@ -29,6 +29,7 @@ public class AltarGroup : PowerTrigger
         RequiredTrigger.Clear();
         foreach (TriggerAltar triggerAltar  in GetComponentsInChildren<TriggerAltar>())
         {
+            triggerAltar.Mode = TriggerAltar.EMode.SubTrigger;
             triggerAltar.BindAltarGroup = this;
             RequiredTrigger.Add(triggerAltar);
         }
