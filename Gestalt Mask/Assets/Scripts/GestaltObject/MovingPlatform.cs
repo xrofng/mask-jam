@@ -10,10 +10,11 @@ public class MovingPlatform : GestaltObj
     [SerializeField] bool lockY = true;
     [SerializeField] bool oneTrip = false;
     [SerializeField] bool needPower;
+    public bool NeedPower { set { needPower = value; } get { return needPower; } }
+
     bool currentPower;
+    public bool HasPower => currentPower;
     Transform target;
-
-
 
 
     int currentIndex = 0;
@@ -30,7 +31,6 @@ public class MovingPlatform : GestaltObj
     {
         currentPower = false;
     }
-
 
     protected override void Awake()
     {

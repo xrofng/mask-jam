@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PickableObj : Interactable
@@ -24,6 +25,16 @@ public class PickableObj : Interactable
         if (!_held) return;
 
         FollowHoldPoint();
+    }
+
+    public void InvokeOnPick()
+    {
+        OnPickedUp();
+    }
+
+    protected virtual void OnPickedUp()
+    {
+        
     }
 
     protected override void Interact(PlayerInteractor interactor)

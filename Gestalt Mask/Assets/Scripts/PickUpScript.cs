@@ -52,7 +52,6 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
         {
             if (heldObj == null)
             {
-                Debug.Log(PlayerInteractor.FacingInteractable);
                 if (PlayerInteractor.FacingInteractable &&
                     PlayerInteractor.FacingInteractable.TryGetComponent(out PickableObj pickableObj))
                 {
@@ -92,6 +91,7 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
             heldObjRb.isKinematic = true;
             heldObjRb.transform.parent = holdPos.transform; //parent object to holdposition
             heldObj.gameObject.layer = holdingLayer; //change the object layer to the holdLayer
+            heldObj.InvokeOnPick();
             //make sure object doesnt collide with player, it can cause weird bugs
             Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), playerCollider, true);
         }
