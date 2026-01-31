@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class CurseBox_Ui : MonoBehaviour
 {
     [SerializeField] Image image;
-
+    [SerializeField] Image backImage;
     MaskController.ECurse boxCurseType;
 
 
@@ -22,7 +22,7 @@ public class CurseBox_Ui : MonoBehaviour
 
     public void moveCurrentIndex(int Direction, int maxRange)
     {
-        int futureDirection = currentIndexPosition + Direction;
+        int futureDirection = currentIndexPosition - Direction;
 
         if (futureDirection < 0)
         {
@@ -52,13 +52,31 @@ public class CurseBox_Ui : MonoBehaviour
         this.BoxCurseType = boxCurseType;
     }
 
+    public void UpdateState(bool lockState)
+    {
+        if (lockState == true)
+        {
+
+        }
+        else
+        {
+
+        }
+    }
+
+
     public void ActiveEffect()
     {
-
+        image.enabled = true;
+        backImage.enabled = true;
+        image.color = Color.white;
     }
 
     public void DisActiveEffect()
     {
+        image.enabled = true;
+        image.color = Color.black;
+        backImage.enabled = false;
 
     }
 

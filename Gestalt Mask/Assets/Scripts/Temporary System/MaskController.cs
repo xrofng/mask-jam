@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class MaskController : BetterMonoBehaviour
 {
+
     public event Action<List<EcurseMaskState>> OnSetUpList;
+    public event Action<ECurse> OnUnLock;
     public event Action<int> OnScrollMovement;
     public event Action<ECurse, bool> OnActive;
     [SerializeField] float scrollThreshold = 0.1f;
@@ -21,7 +23,7 @@ public class MaskController : BetterMonoBehaviour
                         new EcurseMaskState(ECurse.Invariance , false),
 
     };
-    int currentIndex;
+    int currentIndex = 2;
     int maxIndex => eCuseList.Count;
 
 
@@ -66,6 +68,7 @@ public class MaskController : BetterMonoBehaviour
     }
 
 
+
     private void SetCurseInitial()
     {
         SetCurse(InitialCurse);
@@ -80,8 +83,24 @@ public class MaskController : BetterMonoBehaviour
 
     protected override void Update()
     {
+
         handleScrollMovement();
         activeHandle();
+        handleUnlockKey();
+    }
+
+    void handleUnlockKey()
+    {
+        foreach (var curse in eCuseList)
+        {
+            bool beforeKeyState = curse.IsUnLock;
+            curse.unlockKeyPress();
+            if (beforeKeyState == false && curse.IsUnLock)
+            {
+                OnUnLock?.Invoke(curse.CurseMask);
+            }
+
+        }
     }
 
     void handleScrollMovement()

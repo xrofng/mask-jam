@@ -8,7 +8,6 @@ public class CurseScroll : BetterMonoBehaviour
     [SerializeField] MaskController maskController;
     [SerializeField]
     List<eCurseToSprite> eCurseToSprites = new List<eCurseToSprite>()
-
     {
       new eCurseToSprite(MaskController.ECurse.Continuance,null),
         new eCurseToSprite(MaskController.ECurse.Proximity,null),
@@ -24,12 +23,21 @@ public class CurseScroll : BetterMonoBehaviour
     List<CurseBox_Ui> curseBox_Uis = new List<CurseBox_Ui>();
     int activeECurseIndex = -1;
 
+
+
+
     protected override void Awake()
     {
+        if (maskController == null)
+        {
+            maskController = FindAnyObjectByType<MaskController>();
+        }
+
+
         maskController.OnActive += onActiveUi;
         maskController.OnScrollMovement += moveIndex;
         maskController.OnSetUpList += onSetUpList;
-
+        maskController.OnUnLock += UnLock;
 
         foreach (Transform i in boxPosition)
         {
@@ -51,7 +59,7 @@ public class CurseScroll : BetterMonoBehaviour
 
             curseBox_Uis[number].SetUp(curses[number].CurseMask, number, getSprite);
             boxPos.Add(boxPosition[number].position);
-
+            curseBox_Uis[number].DisActiveEffect();
         }
     }
 
@@ -64,6 +72,11 @@ public class CurseScroll : BetterMonoBehaviour
             box.moveCurrentIndex(direction, eCurseToSprites.Count);
             box.UpdatePos(boxPos[box.CurrentIndexPosition]);
         }
+    }
+
+    void UnLock(MaskController.ECurse triggerUnlokcCurse)
+    {
+        curseBox_Uis.FirstOrDefault(i => i.BoxCurseType == triggerUnlokcCurse).UpdateState(true);
     }
 
     MaskController.ECurse previosActiveCurse = MaskController.ECurse.None;
