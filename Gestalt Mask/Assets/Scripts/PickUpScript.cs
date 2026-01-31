@@ -46,7 +46,7 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
     protected override void Update()
     {
         base.Update();
-        if (Input.GetKeyDown(KeyCode.E)) //change E to whichever key you want to press to pick up
+        if (Input.GetKeyDown(KeyCode.Mouse0)) //change E to whichever key you want to press to pick up
         {
             if (heldObj == null)
             {
@@ -60,6 +60,7 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
             {
                 if (canDrop == true)
                 {
+                    Debug.Log("drop");
                     StopClipping(); //prevents object from clipping through walls
                     DropObject();
                 }
