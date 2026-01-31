@@ -12,6 +12,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pv_Similar_Pickable Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 771256914938568503, guid: 3090a114de9babb4ab58fa3939a83b89, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 771256914938568503, guid: 3090a114de9babb4ab58fa3939a83b89, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.462045
+      objectReference: {fileID: 0}
+    - target: {fileID: 771256914938568503, guid: 3090a114de9babb4ab58fa3939a83b89, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 771256914938568503, guid: 3090a114de9babb4ab58fa3939a83b89, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.013
+      objectReference: {fileID: 0}
+    - target: {fileID: 771256914938568503, guid: 3090a114de9babb4ab58fa3939a83b89, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.188
+      objectReference: {fileID: 0}
     - target: {fileID: 1755522467132950384, guid: 3090a114de9babb4ab58fa3939a83b89, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -52,6 +72,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4113787120702938370, guid: 3090a114de9babb4ab58fa3939a83b89, type: 3}
+      propertyPath: m_Size.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4113787120702938370, guid: 3090a114de9babb4ab58fa3939a83b89, type: 3}
+      propertyPath: m_Center.y
+      value: 0.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 4573938055089829200, guid: 3090a114de9babb4ab58fa3939a83b89, type: 3}
+      propertyPath: isEnabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4573938055089829200, guid: 3090a114de9babb4ab58fa3939a83b89, type: 3}
+      propertyPath: HideOnInitial
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167598868736874588, guid: 3090a114de9babb4ab58fa3939a83b89, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 59712e258852f9a4b984d48833c60e3c, type: 2}
+    - target: {fileID: 7924844790795594516, guid: 3090a114de9babb4ab58fa3939a83b89, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 2401994324257950250, guid: 0fa6af759e7d9b848a961869c73ff210, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

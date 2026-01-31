@@ -11,7 +11,7 @@ public class AltarGroup : PowerTrigger
         Debug.Log(RequiredTrigger);
         foreach (TriggerAltar trigger in RequiredTrigger)
         {
-            if (trigger.IsPowerOn == false)
+            if (trigger.IsPlatformMove == false)
             {
                 if (BindMovingPlatform.HasPower)
                 {

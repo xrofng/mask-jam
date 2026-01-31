@@ -5,6 +5,8 @@ public class PowerSourcePickable : PickableObj
 {
     TriggerAltar TriggerAltar;
 
+    public string Key;
+
     protected override void OnPickedUp()
     {
         base.OnPickedUp();

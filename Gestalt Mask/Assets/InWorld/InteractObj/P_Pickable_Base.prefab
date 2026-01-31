@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1755522467132950384}
-  - component: {fileID: 1309792014464088792}
   - component: {fileID: 4113787120702938370}
   - component: {fileID: 6035257797688765159}
   - component: {fileID: 5063588351289421985}
+  - component: {fileID: 4573938055089829200}
   m_Layer: 6
   m_Name: P_Pickable_Base
   m_TagString: Untagged
@@ -36,20 +36,6 @@ Transform:
   - {fileID: 771256914938568503}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1309792014464088792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 143397081322448494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bbcab890d690aa46a498b32a42e72b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prompt: Interact
-  isEnabled: 1
 --- !u!65 &4113787120702938370
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -115,6 +101,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &4573938055089829200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143397081322448494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff4fb03d9f1f614b8e98088e1592959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prompt: Interact
+  isEnabled: 1
+  HideOnInitial: 0
 --- !u!1 &1761767784851196721
 GameObject:
   m_ObjectHideFlags: 0

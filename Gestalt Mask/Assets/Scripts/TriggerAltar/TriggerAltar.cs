@@ -1,8 +1,13 @@
 using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 
 public class TriggerAltar : PowerTrigger
 {
+    
+    [Header("Setting")]
+    public Color powerOnColor;
+
     public enum EMode
     {
         NormalTrigger,
@@ -15,8 +20,20 @@ public class TriggerAltar : PowerTrigger
     private bool ModeIsNormal => Mode == EMode.NormalTrigger;
     private bool ModeIsSub => Mode == EMode.SubTrigger;
 
+    public bool SpecifyKey;
+    [ShowIf("SpecifyKey")]
+    public string Key;
     public Transform PosMarker;
 
+    [Header("Obj Ref")]
+    public MeshRenderer[] DetectorMesh;
+    private Color _iColor;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        _iColor = DetectorMesh[0].material.GetColor("_BaseColor");
+    }
 
     protected override void Interact(PlayerInteractor interactor)
     {
@@ -26,14 +43,24 @@ public class TriggerAltar : PowerTrigger
 
             if (powerSource != null)
             {
-                StartPower();
+                if (SpecifyKey)
+                {
+                    if (Key == powerSource.Key)
+                    {
+                        StartPower();
+                    }
+                }
+                else
+                {
+                    StartPower();
+                }
+                OnPowerPlaced();
             }
         }
     }
 
-    protected override void OnPowerStarted()
+    private void OnPowerPlaced()
     {
-        base.OnPowerStarted();
         powerSource.transform.position = PosMarker.transform.position;
         powerSource.transform.parent = PosMarker;
         powerSource.SetRigibody(false);
@@ -43,6 +70,22 @@ public class TriggerAltar : PowerTrigger
         {
             BindAltarGroup.UpdatePower();
         }
+
+        UpdateSignifier();
+    }
+
+    private void UpdateSignifier()
+    {
+        foreach (var m in DetectorMesh)
+        {
+            m.material.SetColor("_BaseColor", IsPowerOn ? powerOnColor : _iColor);
+        }
+    }
+
+    protected override void OnPowerStarted()
+    {
+        base.OnPowerStarted();
+        
     }
 
     protected override void OnPowerStopped()
@@ -52,6 +95,7 @@ public class TriggerAltar : PowerTrigger
         {
             BindAltarGroup.UpdatePower();
         }
+        UpdateSignifier();
     }
 
     protected override bool IsNeedMovingPlatform()
