@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -5,6 +6,7 @@ public class CurseScroll : BetterMonoBehaviour
 {
 
 
+    [SerializeField] float disableTime = 3;
     [SerializeField] MaskController maskController;
     [SerializeField]
     List<eCurseToSprite> eCurseToSprites = new List<eCurseToSprite>()
@@ -49,6 +51,10 @@ public class CurseScroll : BetterMonoBehaviour
     }
 
 
+
+
+
+
     void onSetUpList(List<EcurseMaskState> curses)
     {
         for (int number = 0; number < curses.Count; number++)
@@ -61,10 +67,16 @@ public class CurseScroll : BetterMonoBehaviour
             boxPos.Add(boxPosition[number].position);
             curseBox_Uis[number].DisActiveEffect();
         }
+        foreach (var i in curseBox_Uis)
+        {
+            i.gameObject.SetActive(false);
+        }
     }
 
     void moveIndex(int direction)
     {
+        StopAllCoroutines();
+        StartCoroutine(routine());
         if (direction == 0) return;
         Debug.Log($"move all {direction}");
         foreach (CurseBox_Ui box in curseBox_Uis)
@@ -76,14 +88,32 @@ public class CurseScroll : BetterMonoBehaviour
 
     void UnLock(MaskController.ECurse triggerUnlokcCurse)
     {
+        StopAllCoroutines();
+        StartCoroutine(routine());
         curseBox_Uis.FirstOrDefault(i => i.BoxCurseType == triggerUnlokcCurse).UpdateState(true);
+    }
+
+
+    IEnumerator routine()
+    {
+
+        foreach (var i in curseBox_Uis)
+        {
+            i.gameObject.SetActive(true);
+        }
+        yield return new WaitForSeconds(disableTime);
+        foreach (var i in curseBox_Uis)
+        {
+            i.gameObject.SetActive(false);
+        }
     }
 
     MaskController.ECurse previosActiveCurse = MaskController.ECurse.None;
     void onActiveUi(MaskController.ECurse setCurse, bool Active)
     {
-
-
+        StopAllCoroutines();
+        StartCoroutine(routine());
+        Debug.Log($"{setCurse} : {Active}");
         if (Active)
         {
             if (previosActiveCurse != MaskController.ECurse.None && Active)
@@ -92,11 +122,13 @@ public class CurseScroll : BetterMonoBehaviour
                 previosActiveCurse = MaskController.ECurse.None;
             }
 
-            curseBox_Uis.FirstOrDefault(i => i.BoxCurseType == setCurse).ActiveEffect();
+
+            curseBox_Uis.FirstOrDefault(i => i.BoxCurseType == setCurse)?.ActiveEffect();
             previosActiveCurse = setCurse;
         }
         else
         {
+
             curseBox_Uis.FirstOrDefault(i => i.BoxCurseType == setCurse).DisActiveEffect();
 
         }

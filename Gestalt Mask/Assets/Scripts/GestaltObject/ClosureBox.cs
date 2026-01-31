@@ -1,11 +1,8 @@
 using UnityEngine;
+using UnityEngine.Events;
 public class ClosureBox : GestaltObj
 {
-
-    [SerializeField] MeshRenderer _onEnableCurse_Mesh;
-    [SerializeField] Collider _onEnableCurse_Collider;
-    [SerializeField] MeshRenderer _onDisableCurse_Mesh;
-    [SerializeField] Collider _onDisaCurse_Collider;
+    [SerializeField] UnityEvent onEnable, onDisable;
     protected override MaskController.ECurse TargetCurse => MaskController.ECurse.Closure;
 
 
@@ -17,17 +14,11 @@ public class ClosureBox : GestaltObj
 
     protected override void OnCurseDisabled()
     {
-        _onDisableCurse_Mesh.enabled = false;
-        _onEnableCurse_Collider.enabled = false;
-        _onDisableCurse_Mesh.enabled = true;
-        _onDisableCurse_Mesh.enabled = true;
+        onEnable?.Invoke();
     }
 
     protected override void OnCurseEnabled()
     {
-        _onDisableCurse_Mesh.enabled = true;
-        _onEnableCurse_Collider.enabled = true;
-        _onDisableCurse_Mesh.enabled = false;
-        _onDisableCurse_Mesh.enabled = false;
+        onDisable?.Invoke();
     }
 }

@@ -31,7 +31,8 @@ public class ColliderEvent : MonoBehaviour
             foreach (var script in allScript)
             {
                 script.enabled = true;
-             
+                Debug.Log("Enable True");
+
             }
         }
     }

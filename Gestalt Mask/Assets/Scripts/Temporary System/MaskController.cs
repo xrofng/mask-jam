@@ -123,7 +123,7 @@ public class MaskController : BetterMonoBehaviour
             currentIndex = futureIndex;
 
         Debug.Log($"Scroll dir: {dir}");
-        OnScrollMovement.Invoke(dir);
+        OnScrollMovement?.Invoke(dir);
     }
 
     void activeHandle()
@@ -144,9 +144,10 @@ public class MaskController : BetterMonoBehaviour
 
         // onDisable
         SetCurse(ECurse.None);
+
         if (isSameCurse)
         {
-            OnActive?.Invoke(CurrentCurse, false);
+            OnActive?.Invoke(eCuseList[currentIndex].CurseMask, false);
             return;
         }
 
