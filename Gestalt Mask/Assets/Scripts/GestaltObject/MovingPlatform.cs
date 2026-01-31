@@ -9,6 +9,8 @@ public class MovingPlatform : GestaltObj
     [SerializeField] float speed = 5f;
     [SerializeField] bool lockY = true;
     [SerializeField] bool oneTrip = false;
+    [SerializeField] bool needPower;
+    bool currentPower;
     Transform target;
 
 
@@ -17,6 +19,18 @@ public class MovingPlatform : GestaltObj
     int currentIndex = 0;
     protected override MaskController.ECurse TargetCurse
         => MaskController.ECurse.Continuance;
+
+
+    public void ActivePower()
+    {
+        currentPower = true;
+    }
+
+    public void DisablePower()
+    {
+        currentPower = false;
+    }
+
 
     protected override void Awake()
     {
@@ -34,6 +48,10 @@ public class MovingPlatform : GestaltObj
 
     protected override void Update()
     {
+        if (currentPower == false && needPower)
+        {
+            return;
+        }
         if (!target) return;
 
         Vector3 targetPos = target.position + offset;
