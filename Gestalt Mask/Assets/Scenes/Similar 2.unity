@@ -1060,8 +1060,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71051d948e25a18458c3797345fb96f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollThreshold: 0.1
-  eCuseList: 
+  scrollThreshold: 1
+  eCuseList:
+  - UnLockKeyCode: 0
+    curseMask: 1
+    isUnLock: 1
+  - UnLockKeyCode: 0
+    curseMask: 2
+    isUnLock: 1
+  - UnLockKeyCode: 0
+    curseMask: 3
+    isUnLock: 1
+  - UnLockKeyCode: 0
+    curseMask: 4
+    isUnLock: 1
+  - UnLockKeyCode: 0
+    curseMask: 5
+    isUnLock: 1
   InitialCurse: 0
   CurrentCurse: 0
 --- !u!4 &1404405151

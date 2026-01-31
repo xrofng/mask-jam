@@ -41,15 +41,15 @@ public class CurseScroll : BetterMonoBehaviour
     }
 
 
-    void onSetUpList(List<MaskController.ECurse> curses)
+    void onSetUpList(List<EcurseMaskState> curses)
     {
         for (int number = 0; number < curses.Count; number++)
         {
 
 
-            Sprite getSprite = eCurseToSprites.FirstOrDefault(i => i.Curse == curses[number]).Sprite;
+            Sprite getSprite = eCurseToSprites.FirstOrDefault(i => i.Curse == curses[number].CurseMask).Sprite;
 
-            curseBox_Uis[number].SetUp(curses[number], number, getSprite);
+            curseBox_Uis[number].SetUp(curses[number].CurseMask, number, getSprite);
             boxPos.Add(boxPosition[number].position);
 
         }
@@ -66,15 +66,25 @@ public class CurseScroll : BetterMonoBehaviour
         }
     }
 
+    MaskController.ECurse previosActiveCurse = MaskController.ECurse.None;
     void onActiveUi(MaskController.ECurse setCurse, bool Active)
     {
 
+
         if (Active)
         {
+            if (previosActiveCurse != MaskController.ECurse.None && Active)
+            {
+                curseBox_Uis.FirstOrDefault(i => i.BoxCurseType == previosActiveCurse).DisActiveEffect();
+                previosActiveCurse = MaskController.ECurse.None;
+            }
 
+            curseBox_Uis.FirstOrDefault(i => i.BoxCurseType == setCurse).ActiveEffect();
+            previosActiveCurse = setCurse;
         }
         else
         {
+            curseBox_Uis.FirstOrDefault(i => i.BoxCurseType == setCurse).DisActiveEffect();
 
         }
 

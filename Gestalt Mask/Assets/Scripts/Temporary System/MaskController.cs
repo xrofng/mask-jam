@@ -1,17 +1,26 @@
-﻿using Sirenix.OdinInspector;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MaskController : BetterMonoBehaviour
 {
-    public event Action<List<ECurse>> OnSetUpList;
+    public event Action<List<EcurseMaskState>> OnSetUpList;
     public event Action<int> OnScrollMovement;
     public event Action<ECurse, bool> OnActive;
     [SerializeField] float scrollThreshold = 0.1f;
 
 
-    [SerializeField] List<ECurse> eCuseList = new List<ECurse>();
+    [SerializeField]
+    List<EcurseMaskState> eCuseList = new List<EcurseMaskState>()
+    {
+   new EcurseMaskState(ECurse.Proximity , false),
+      new EcurseMaskState(ECurse.Similarity , false),
+            new EcurseMaskState(ECurse.Continuance , true),
+                        new EcurseMaskState(ECurse.Closure , false),
+                        new EcurseMaskState(ECurse.Invariance , false),
+
+    };
     int currentIndex;
     int maxIndex => eCuseList.Count;
 
@@ -51,22 +60,11 @@ public class MaskController : BetterMonoBehaviour
     protected override void Start()
     {
         Invoke(nameof(SetCurseInitial), float.MinValue);
-        if (eCuseList.Count == 0)
-        {
-            setUpList();
-        }
+
 
         OnSetUpList?.Invoke(eCuseList);
     }
-    [Button("set up List")]
-    void setUpList()
-    {
-        foreach (ECurse value in Enum.GetValues(typeof(ECurse)))
-        {
-            if (value == ECurse.None) continue;
-            eCuseList.Add(value);
-        }
-    }
+
 
     private void SetCurseInitial()
     {
@@ -121,7 +119,10 @@ public class MaskController : BetterMonoBehaviour
     void setUpNewCurse()
     {
 
-        bool isSameCurse = (CurrentCurse == eCuseList[currentIndex]);
+        bool isSameCurse = (CurrentCurse == eCuseList[currentIndex].CurseMask);
+
+        if (eCuseList.FirstOrDefault(i => i.CurseMask == eCuseList[currentIndex].CurseMask).IsUnLock == false) return;
+
         // onDisable
         SetCurse(ECurse.None);
         if (isSameCurse)
@@ -132,11 +133,37 @@ public class MaskController : BetterMonoBehaviour
 
 
         // on Enable
-        SetCurse(eCuseList[currentIndex]);
+        SetCurse(eCuseList[currentIndex].CurseMask);
         OnActive?.Invoke(CurrentCurse, true);
 
 
 
     }
 }
+[Serializable]
+public class EcurseMaskState
+{
+    [SerializeField] KeyCode UnLockKeyCode;
+    [SerializeField] MaskController.ECurse curseMask;
+    [SerializeField] bool isUnLock;
 
+    public EcurseMaskState(MaskController.ECurse curseMask, bool isUnLock)
+    {
+        this.CurseMask = curseMask;
+        this.IsUnLock = isUnLock;
+    }
+
+    public MaskController.ECurse CurseMask { get => curseMask; set => curseMask = value; }
+    public bool IsUnLock { get => isUnLock; set => isUnLock = value; }
+
+    public void unlockKeyPress()
+    {
+        if (IsUnLock) return;
+
+        if (Input.GetKeyDown(UnLockKeyCode))
+        {
+            IsUnLock = true;
+        }
+    }
+
+}
