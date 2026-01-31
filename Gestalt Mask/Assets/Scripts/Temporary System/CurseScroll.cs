@@ -25,7 +25,8 @@ public class CurseScroll : BetterMonoBehaviour
     List<CurseBox_Ui> curseBox_Uis = new List<CurseBox_Ui>();
     int activeECurseIndex = -1;
 
-
+    [Header("Obj Ref")]
+    public SimpleMMSoundPlayer ScrollSfx;
 
 
     protected override void Awake()
@@ -75,12 +76,12 @@ public class CurseScroll : BetterMonoBehaviour
         StopAllCoroutines();
         StartCoroutine(routine());
         if (direction == 0) return;
-        Debug.Log($"move all {direction}");
         foreach (CurseBox_Ui box in curseBox_Uis)
         {
             box.moveCurrentIndex(direction, eCurseToSprites.Count);
             box.UpdatePos(boxPos[box.CurrentIndexPosition]);
         }
+        ScrollSfx.PlayClip();
     }
 
     void UnLock(MaskController.ECurse triggerUnlokcCurse)

@@ -80,7 +80,7 @@ public class FusionableObj : BetterMonoBehaviour, IEventSubcriber<MaskController
         for (int i = 0; i < 10; i++)
         {
             Collider col = _fusionBuffer[i];
-            if (col.TryGetComponent(out FusionableObj fusionableObj))
+            if (col && col.TryGetComponent(out FusionableObj fusionableObj))
             {
                 sum.x += col.transform.position.x;
                 sum.z += col.transform.position.z;
@@ -90,8 +90,14 @@ public class FusionableObj : BetterMonoBehaviour, IEventSubcriber<MaskController
             {
                 break;
             }
+            
             //// disable object
             //col.gameObject.GetComponent<PickableObj>().HideObject();
+        }
+
+        if (fuseMaterial.Count < 2)
+        {
+            return;
         }
 
         Vector3 center = new Vector3(

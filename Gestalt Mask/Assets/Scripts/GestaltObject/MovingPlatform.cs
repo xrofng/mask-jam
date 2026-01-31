@@ -16,7 +16,8 @@ public class MovingPlatform : GestaltObj
     public bool HasPower => currentPower;
     Transform target;
 
-    bool usedOneTrip = false;   
+    [Header("Obj Ref Optional")]
+    public SimpleMMSoundPlayer DoorSfx;
 
     int currentIndex = 0;
     protected override MaskController.ECurse TargetCurse
@@ -26,6 +27,7 @@ public class MovingPlatform : GestaltObj
     public void ActivePower()
     {
         currentPower = true;
+        DoorSfx?.PlayClip();
     }
 
     public void DisablePower()
@@ -95,13 +97,9 @@ public class MovingPlatform : GestaltObj
 
             if (currentIndex >= movementPos.Count)
                 currentIndex = 0;
-            if (oneTrip && usedOneTrip == false)
+            if (oneTrip)
             {
-                
                 target = null;
-                usedOneTrip = true;
-                return;
-                
             }
 
             target = movementPos[currentIndex];
@@ -114,7 +112,6 @@ public class MovingPlatform : GestaltObj
     {
         if (other.gameObject.CompareTag("Player") == false) return;
         isPlayerIn = true;
-
     }
 
     private void OnTriggerExit(Collider other)
@@ -131,7 +128,6 @@ public class MovingPlatform : GestaltObj
 
     protected override void OnCurseDisabled()
     {
-        usedOneTrip = false;
         if (isPlayerIn)
         {
             playerControl.EnableMove = false;

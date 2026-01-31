@@ -7,9 +7,14 @@ public class GestProximity : GestaltObj
 
     protected override MaskController.ECurse TargetCurse => MaskController.ECurse.Proximity;
 
+    public SimpleMMSoundPlayer OnDeFusionSFX;
+
+    public SimpleMMSoundPlayer OnSpawnSFX;
+
     protected override void Awake()
     {
         base.Awake();
+        OnSpawnSFX?.PlayClip();
     }
 
     protected override void OnCurseEnabled()
@@ -23,6 +28,7 @@ public class GestProximity : GestaltObj
             }
             member.Pickable.ShowObject();
             member.transform.parent = null;
+            OnDeFusionSFX?.PlayClip();
         }
         GroupMember.Clear();
         Invoke(nameof(HideThisObj), float.MinValue);

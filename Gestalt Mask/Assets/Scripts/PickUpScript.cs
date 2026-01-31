@@ -9,6 +9,10 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
     public LayerMask PickableLayer;
     public string HoldLayerName = "Holding";
     public string PickLayerName = "Pickable";
+
+    [Header("Obj Ref")]
+    public SimpleMMSoundPlayer PickSfx;
+    public SimpleMMSoundPlayer DropSfx;
     //if you copy from below this point, you are legally required to like the video
     public float throwForce = 500f; //force at which the object is thrown at
     public float pickUpRange = 5f; //how far the player can pickup the object from
@@ -50,6 +54,7 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
         {
             if (heldObj == null)
             {
+                EventBus.TriggerEvent(new Crosshair.EvsPlayerAim(Crosshair.SelectionState.Pressed, heldObj));
                 if (PlayerInteractor.FacingInteractable &&
                     PlayerInteractor.FacingInteractable.TryGetComponent(out PickableObj pickableObj))
                 {
@@ -58,6 +63,7 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
             }
             else
             {
+                EventBus.TriggerEvent(new Crosshair.EvsPlayerAim(Crosshair.SelectionState.Pressed, heldObj));
                 if (canDrop == true)
                 {
                     Debug.Log("drop");
@@ -92,6 +98,7 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
             heldObj.InvokeOnPick();
             //make sure object doesnt collide with player, it can cause weird bugs
             Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), playerCollider, true);
+            PickSfx.PlayClip();
         }
     }
 
@@ -118,6 +125,7 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
             }
         }
         heldObj = null; //undefine game object
+        DropSfx.PlayClip();
 
     }
     void MoveObject()

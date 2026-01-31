@@ -15,6 +15,8 @@ public class PlayerInteractor : BetterMonoBehaviour
     public Interactable FacingInteractable => _current;
 
     private PickUpScript _pickUp;
+    private bool _isPrevFound;
+
     public PickUpScript PickUp
     {
         get
@@ -30,16 +32,24 @@ public class PlayerInteractor : BetterMonoBehaviour
     {
         base.Update();
         DoSphereRay(out _current, out _currentHit, out _isFound);
-
-        if (_isFound)
+        // event to update ui
+        if (_isPrevFound != _isFound)
         {
-            // event to update ui
-            //EventBus.TriggerEvent(new )
-            //Crosshair.
+            if (_isFound)
+            {
+                EventBus.TriggerEvent(new Crosshair.EvsPlayerAim(Crosshair.SelectionState.Highlighted, _current));
+            }
+            else
+            {
+                EventBus.TriggerEvent(new Crosshair.EvsPlayerAim(Crosshair.SelectionState.Normal, null));
+            }
         }
+        _isPrevFound = _isFound;
+
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && _isFound)
         {
+            EventBus.TriggerEvent(new Crosshair.EvsPlayerAim(Crosshair.SelectionState.Pressed, _current));
             _current.TryInteract(this);
         }
     }

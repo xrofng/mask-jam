@@ -26,7 +26,7 @@ public class MaskController : BetterMonoBehaviour
     int currentIndex = 2;
     int maxIndex => eCuseList.Count;
 
-
+    public SimpleMMSoundPlayer EquipMaskSfx;
 
 
 
@@ -155,9 +155,6 @@ public class MaskController : BetterMonoBehaviour
         // on Enable
         SetCurse(eCuseList[currentIndex].CurseMask);
         OnActive?.Invoke(CurrentCurse, true);
-
-
-
     }
 }
 [Serializable]
