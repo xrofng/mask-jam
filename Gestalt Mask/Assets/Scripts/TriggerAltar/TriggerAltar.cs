@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TriggerAltar : PowerTrigger
 {
-    
     [Header("Setting")]
     public Color powerOnColor;
 
@@ -70,11 +69,14 @@ public class TriggerAltar : PowerTrigger
         {
             BindAltarGroup.UpdatePower();
         }
+        else
+        {
+            UpdateSignifier();
+        }
 
-        UpdateSignifier();
     }
 
-    private void UpdateSignifier()
+    public void UpdateSignifier()
     {
         foreach (var m in DetectorMesh)
         {

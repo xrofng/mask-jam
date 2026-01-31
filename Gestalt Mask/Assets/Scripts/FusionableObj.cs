@@ -20,6 +20,22 @@ public class FusionableObj : BetterMonoBehaviour, IEventSubcriber<MaskController
         }
     }
 
+    List<object> _fuseInterceptor = new List<object>();
+    public bool CantFuse => _fuseInterceptor.Count > 0;
+
+    public void AddIntercpetor(object obj)
+    {
+        _fuseInterceptor.Add(obj);
+    }
+
+    public void RemoveIntercpetor(object obj)
+    {
+        if (_fuseInterceptor.Contains(obj))
+        {
+            _fuseInterceptor.Remove(obj);
+        }
+    }
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -41,6 +57,12 @@ public class FusionableObj : BetterMonoBehaviour, IEventSubcriber<MaskController
 
     public void TryFusion(out int proximityCount)
     {
+        if (CantFuse)
+        {
+            proximityCount = 0;
+            return;
+        }
+
         int fusionMaterialLimit = 2;
         _fusionBuffer = new Collider[10];
         proximityCount = 0;

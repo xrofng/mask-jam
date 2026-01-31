@@ -8,19 +8,39 @@ public class AltarGroup : PowerTrigger
 
     public void UpdatePower()
     {
-        Debug.Log(RequiredTrigger);
+        int count = 0;
         foreach (TriggerAltar trigger in RequiredTrigger)
         {
-            if (trigger.IsPlatformMove == false)
+            if (trigger.IsPowerOn == false)
             {
                 if (BindMovingPlatform.HasPower)
                 {
                     StopPower();
                 }
+                Debug.Log(name + " has " + count + " trigger power on");
                 return;
             }
+            count += 1;
         }
         StartPower();
+    }
+
+    protected override void OnPowerStarted()
+    {
+        base.OnPowerStarted();
+        foreach (TriggerAltar trigger in RequiredTrigger)
+        {
+            trigger.UpdateSignifier();
+        }
+    }
+
+    protected override void OnPowerStopped()
+    {
+        base.OnPowerStopped();
+        foreach (TriggerAltar trigger in RequiredTrigger)
+        {
+            trigger.UpdateSignifier();
+        }
     }
 
     [Button("Bind child trigger")]
@@ -34,5 +54,4 @@ public class AltarGroup : PowerTrigger
             RequiredTrigger.Add(triggerAltar);
         }
     }
-    //override 
 }

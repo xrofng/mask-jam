@@ -34,9 +34,11 @@ public class PlayerInteractor : BetterMonoBehaviour
         if (_isFound)
         {
             // event to update ui
+            //EventBus.TriggerEvent(new )
+            //Crosshair.
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && _isFound)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && _isFound)
         {
             _current.TryInteract(this);
         }

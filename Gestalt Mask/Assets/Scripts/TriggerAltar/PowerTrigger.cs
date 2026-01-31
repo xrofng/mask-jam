@@ -5,11 +5,12 @@ public class PowerTrigger : Interactable
 {
     [ShowIf("IsNeedMovingPlatform")]
     [OnValueChanged("MarkUsePower")]
-    public MovingPlatform BindMovingPlatform;
+    public MovingPlatform[] BindMovingPlatform;
     protected PowerSourcePickable powerSource;
+    private bool _isPowerOn;
 
-    public bool IsPlatformMove => BindMovingPlatform.HasPower;
-    public bool IsPowerOn => powerSource;
+    public bool IsPlatformMove => BindMovingPlatform[0].HasPower;
+    public bool IsPowerOn => _isPowerOn;
 
     protected virtual bool IsNeedMovingPlatform()
     {
@@ -23,10 +24,14 @@ public class PowerTrigger : Interactable
 
     protected void StartPower()
     {
+        _isPowerOn = true;
         OnPowerStarted();
-        if (BindMovingPlatform)
+        if (BindMovingPlatform.Length > 0)
         {
-            BindMovingPlatform.ActivePower();
+            foreach (var platform in BindMovingPlatform)
+            {
+                platform.ActivePower();
+            }
         }
     }
 
@@ -37,11 +42,15 @@ public class PowerTrigger : Interactable
 
     public void StopPower()
     {
+        _isPowerOn = false;
         powerSource = null;
 
-        if (BindMovingPlatform)
+        if (BindMovingPlatform.Length > 0)
         {
-            BindMovingPlatform.DisablePower();
+            foreach (var platform in BindMovingPlatform)
+            {
+                platform.DisablePower();
+            }
         }
 
         OnPowerStopped();
@@ -54,6 +63,12 @@ public class PowerTrigger : Interactable
 
     private void MarkUsePower()
     {
-        BindMovingPlatform.NeedPower = true;
+        if (BindMovingPlatform.Length > 0)
+        {
+            foreach (var platform in BindMovingPlatform)
+            {
+                platform.NeedPower = true;
+            }
+        }
     }
 }
