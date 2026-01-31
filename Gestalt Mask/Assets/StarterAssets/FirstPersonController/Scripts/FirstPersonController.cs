@@ -141,6 +141,10 @@ namespace StarterAssets
             UpdatePlatformTracking();
 
             JumpAndGravity();
+        }
+
+        private void FixedUpdate()
+        {
             Move();
         }
 
