@@ -142,7 +142,7 @@ public class MaskController : BetterMonoBehaviour
 
         if (eCuseList.FirstOrDefault(i => i.CurseMask == eCuseList[currentIndex].CurseMask).IsUnLock == false) return;
 
-        // onDisable
+        // onCurseEnable
         SetCurse(ECurse.None);
 
         if (isSameCurse)

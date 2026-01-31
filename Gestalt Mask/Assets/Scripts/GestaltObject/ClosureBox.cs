@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 public class ClosureBox : GestaltObj
 {
-    [SerializeField] UnityEvent onEnable, onDisable;
+    [SerializeField] UnityEvent onCurseDisable, onCurseEnable;
     protected override MaskController.ECurse TargetCurse => MaskController.ECurse.Closure;
 
 
@@ -14,11 +14,11 @@ public class ClosureBox : GestaltObj
 
     protected override void OnCurseDisabled()
     {
-        onEnable?.Invoke();
+        onCurseDisable?.Invoke();
     }
 
     protected override void OnCurseEnabled()
     {
-        onDisable?.Invoke();
+        onCurseEnable?.Invoke();
     }
 }
