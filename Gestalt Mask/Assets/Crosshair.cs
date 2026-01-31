@@ -8,11 +8,6 @@
         
 //    }
 
-//    public void OnEventBusTrigger(EvsPlayerAim eventType)
-//    {
-//        throw new System.NotImplementedException();
-//    }
-
 //    public enum SelectionState
 //    {
 //        Normal,

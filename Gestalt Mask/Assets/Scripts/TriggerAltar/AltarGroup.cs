@@ -13,7 +13,7 @@ public class AltarGroup : PowerTrigger
         {
             if (trigger.IsPowerOn == false)
             {
-                if (BindMovingPlatform.HasPower)
+                if (BindMovingPlatform[0].HasPower)
                 {
                     StopPower();
                 }
