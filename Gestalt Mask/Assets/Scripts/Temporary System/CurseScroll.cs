@@ -28,6 +28,8 @@ public class CurseScroll : BetterMonoBehaviour
     [Header("Obj Ref")]
     public SimpleMMSoundPlayer ScrollSfx;
 
+    private bool _hideScroll = true;
+
 
     protected override void Awake()
     {
@@ -73,6 +75,8 @@ public class CurseScroll : BetterMonoBehaviour
 
     void moveIndex(int direction)
     {
+        if (_hideScroll) { return; }
+
         StopAllCoroutines();
         StartCoroutine(routine());
         if (direction == 0) return;
@@ -86,6 +90,7 @@ public class CurseScroll : BetterMonoBehaviour
 
     void UnLock(MaskController.ECurse triggerUnlokcCurse)
     {
+        _hideScroll = false;
         StopAllCoroutines();
         StartCoroutine(routine());
         curseBox_Uis.FirstOrDefault(i => i.BoxCurseType == triggerUnlokcCurse).UpdateState(true);

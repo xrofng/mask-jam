@@ -170,7 +170,7 @@ MonoBehaviour:
   prompt: Interact
   isEnabled: 1
   HideOnInitial: 0
-  Key: 
+  Key: Fusion
 --- !u!1001 &8828448196724835749
 PrefabInstance:
   m_ObjectHideFlags: 0

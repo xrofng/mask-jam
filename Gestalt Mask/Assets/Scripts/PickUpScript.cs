@@ -114,7 +114,7 @@ public class PickUpScript : BetterMonoBehaviour, IEventSubcriber<MaskController.
         //re-enable collision with player
         Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), playerCollider, false);
         heldObj.gameObject.layer = pickLayer; //object assigned back to default layer
-        heldObjRb.isKinematic = false;
+        heldObjRb.isKinematic = true;
         heldObj.transform.parent = null; //unparent object
 
         if (currMask != MaskController.ECurse.Proximity)

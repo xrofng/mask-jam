@@ -2537,8 +2537,8 @@ MonoBehaviour:
   powerOnColor: {r: 0.64106447, g: 0.9245283, b: 0.86425674, a: 1}
   Mode: 0
   BindAltarGroup: {fileID: 0}
-  SpecifyKey: 0
-  Key: 
+  SpecifyKey: 1
+  Key: Fusion
   PosMarker: {fileID: 4276285864841648251}
   DetectorMesh:
   - {fileID: 837674408775904832}

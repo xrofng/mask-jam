@@ -283,7 +283,7 @@ MonoBehaviour:
   prompt: Interact
   isEnabled: 1
   HideOnInitial: 0
-  Key: 
+  Key: Fusion
 --- !u!1 &5452402676959940416
 GameObject:
   m_ObjectHideFlags: 0
