@@ -89,10 +89,10 @@ public class MaskController : BetterMonoBehaviour
         foreach (var curse in eCuseList)
         {
             bool beforeKeyState = curse.IsUnLock;
-            EquipMaskSfx?.PlayClip();
             curse.unlockKeyPress();
             if (beforeKeyState == false && curse.IsUnLock)
             {
+                EquipMaskSfx?.PlayClip();
                 OnUnLock?.Invoke(curse.CurseMask);
             }
 

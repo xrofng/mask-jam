@@ -20,6 +20,10 @@ PrefabInstance:
       propertyPath: SpecifyKey
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1706505933637233058, guid: 98d2cabc8b3832146bc4eed2ad1c4feb, type: 3}
+      propertyPath: Volume
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 1912751108364023629, guid: 98d2cabc8b3832146bc4eed2ad1c4feb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.81
@@ -64,13 +68,17 @@ PrefabInstance:
       propertyPath: m_VersionIndex
       value: 2248
       objectReference: {fileID: 0}
+    - target: {fileID: 3336940998742716567, guid: 98d2cabc8b3832146bc4eed2ad1c4feb, type: 3}
+      propertyPath: Volume
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 4276285864841648251, guid: 98d2cabc8b3832146bc4eed2ad1c4feb, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.503
       objectReference: {fileID: 0}
     - target: {fileID: 4462797644298886338, guid: 98d2cabc8b3832146bc4eed2ad1c4feb, type: 3}
       propertyPath: m_Name
-      value: P_TriggerAltar _Diamond
+      value: P_TriggerAltar_Diamond
       objectReference: {fileID: 0}
     - target: {fileID: 5548113251946907507, guid: 98d2cabc8b3832146bc4eed2ad1c4feb, type: 3}
       propertyPath: m_IsActive

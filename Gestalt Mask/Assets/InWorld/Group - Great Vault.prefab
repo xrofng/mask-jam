@@ -142,6 +142,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6913207389007149228}
+  - {fileID: 4856401681934306452}
   - {fileID: 7546903819444984040}
   - {fileID: 1142632844914902458}
   - {fileID: 457230290219383465}
@@ -630,6 +631,83 @@ MonoBehaviour:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5375142387454839295, guid: d9fe9235a9b922b4fb935ce40440ebf4, type: 3}
   m_PrefabInstance: {fileID: 2768236425520926219}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3141196527570617702
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1256792274957011229}
+    m_Modifications:
+    - target: {fileID: 643391271881882161, guid: a15d59e3686acaf4989441fb8bf89561, type: 3}
+      propertyPath: Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 8e0b9bf630ed3cc479678fb2dd3944c6, type: 3}
+    - target: {fileID: 3395710430767180123, guid: a15d59e3686acaf4989441fb8bf89561, type: 3}
+      propertyPath: m_Name
+      value: Pv_Sfx_Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562284845892913650, guid: a15d59e3686acaf4989441fb8bf89561, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562284845892913650, guid: a15d59e3686acaf4989441fb8bf89561, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562284845892913650, guid: a15d59e3686acaf4989441fb8bf89561, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562284845892913650, guid: a15d59e3686acaf4989441fb8bf89561, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562284845892913650, guid: a15d59e3686acaf4989441fb8bf89561, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562284845892913650, guid: a15d59e3686acaf4989441fb8bf89561, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562284845892913650, guid: a15d59e3686acaf4989441fb8bf89561, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562284845892913650, guid: a15d59e3686acaf4989441fb8bf89561, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562284845892913650, guid: a15d59e3686acaf4989441fb8bf89561, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562284845892913650, guid: a15d59e3686acaf4989441fb8bf89561, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a15d59e3686acaf4989441fb8bf89561, type: 3}
+--- !u!114 &2556370490349502295 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 643391271881882161, guid: a15d59e3686acaf4989441fb8bf89561, type: 3}
+  m_PrefabInstance: {fileID: 3141196527570617702}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cf842d1b39c9de438385c99100ff8d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &4856401681934306452 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7562284845892913650, guid: a15d59e3686acaf4989441fb8bf89561, type: 3}
+  m_PrefabInstance: {fileID: 3141196527570617702}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4293768279272498702
 PrefabInstance:
@@ -1213,6 +1291,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GreatVault
       objectReference: {fileID: 0}
+    - target: {fileID: 7799880149285560717, guid: 171254e8d70c9114b84340a64b938053, type: 3}
+      propertyPath: DoorSfx
+      value: 
+      objectReference: {fileID: 2556370490349502295}
     - target: {fileID: 7799880149285560717, guid: 171254e8d70c9114b84340a64b938053, type: 3}
       propertyPath: needPower
       value: 1

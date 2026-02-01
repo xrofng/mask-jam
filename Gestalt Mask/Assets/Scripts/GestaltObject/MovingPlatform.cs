@@ -18,6 +18,7 @@ public class MovingPlatform : GestaltObj
 
     [Header("Obj Ref Optional")]
     public SimpleMMSoundPlayer DoorSfx;
+    public AudioClip FinalBGM;
 
     int currentIndex = 0;
     protected override MaskController.ECurse TargetCurse
@@ -28,6 +29,10 @@ public class MovingPlatform : GestaltObj
     {
         currentPower = true;
         DoorSfx?.PlayClip();
+        if (FinalBGM)
+        {
+            BGMPlayer.Instance.ChangeClipWithFade(FinalBGM);
+        }
     }
 
     public void DisablePower()
