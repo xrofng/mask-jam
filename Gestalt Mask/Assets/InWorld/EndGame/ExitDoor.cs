@@ -75,6 +75,6 @@ public class ExitDoor : MonoBehaviour
     IEnumerator ReloadRoutine()
     {
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(0);
+        Application.Quit();
     }
 }
