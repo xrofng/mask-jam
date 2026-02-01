@@ -22,12 +22,9 @@ public class GestProximity : GestaltObj
         base.OnCurseEnabled();
         foreach (FusionableObj member in GroupMember)
         {
-            if (Vector3.Distance(member.transform.position, this.transform.position ) > 2)
-            {
-                Vector3 rand = Random.insideUnitSphere;
-                rand.y = Mathf.Abs(rand.y);
-                member.transform.position = rand + transform.position + Vector3.one;
-            }
+            Vector3 rand = Random.insideUnitSphere;
+            rand.y = Mathf.Abs(rand.y);
+            member.transform.position = rand + transform.position + Vector3.one;
             member.Pickable.ShowObject();
             member.transform.parent = null;
             OnDeFusionSFX?.PlayClip();
