@@ -32,7 +32,7 @@ public class TitileCredit : BetterMonoBehaviour
         float speed = Mathf.Lerp(1, 3, 1 - (_currDistance - _distance));
         BeginFB.TimescaleMultiplier = speed;
 
-        if (_currDistance < 1 && _prevDis >= 3)
+        if (_currDistance < 3 && _prevDis >= 3)
         {
             StartCoroutine(GestaltLogoRoutine(4));
         }

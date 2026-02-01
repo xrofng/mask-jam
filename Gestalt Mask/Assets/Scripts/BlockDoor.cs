@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BlockDoor : MonoBehaviour
@@ -5,6 +6,8 @@ public class BlockDoor : MonoBehaviour
     [SerializeField] Collider dorCol;
 
     PickUpScript pickUp;
+
+    private bool _isAutorized;
 
     private void Awake()
     {
@@ -15,43 +18,45 @@ public class BlockDoor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
-
         if (other.gameObject.CompareTag("Player") == false) return;
         PlayerIn = true;
+        Debug.Log("in");
 
-
-
+        if (pickUp.Holding.GetComponent<GestProximity>() == null)
+        {
+            pickUp.ForceDrop();
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player") == false) return;
+        Debug.Log("out");
         PlayerIn = false;
     }
 
     PickableObj previosCheckItem;
     private void Update()
     {
-        if (PlayerIn == false) return;
+        //if (PlayerIn == false) return;
 
-        if (pickUp.Holding == null)
-        {
-            dorCol.enabled = false;
-            return;
-        }
+        //if (pickUp.Holding == null)
+        //{
+        //    //dorCol.enabled = false;
+        //    return;
+        //}
 
-        if (previosCheckItem == pickUp.Holding) return;
+        //if (previosCheckItem == pickUp.Holding) return;
 
-        if (pickUp.Holding.GetComponent<GestProximity>() != null)
-        {
-            dorCol.enabled = false;
+        //if (pickUp.Holding.GetComponent<GestProximity>() != null)
+        //{
+        //    dorCol.enabled = false;
 
-            return;
-        }
+        //    return;
+        //}
 
-        dorCol.enabled = true;
-        pickUp.ForceDrop();
+        //dorCol.enabled = true;
+        //pickUp.ForceDrop();
     }
 
 }
