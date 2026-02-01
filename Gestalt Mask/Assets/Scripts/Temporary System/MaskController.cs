@@ -82,8 +82,8 @@ public class MaskController : BetterMonoBehaviour
     {
 
         handleScrollMovement();
-        activeHandle();
         handleUnlockKey();
+        activeHandle();
     }
 
     void handleUnlockKey()
@@ -104,6 +104,8 @@ public class MaskController : BetterMonoBehaviour
 
     void handleScrollMovement()
     {
+        if (_isMaskMechLock) { return; }
+
         float scroll = Input.mouseScrollDelta.y;
 
         // Ignore tiny scroll noise
