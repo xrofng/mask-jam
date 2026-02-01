@@ -22,7 +22,7 @@ public class TitileCredit : BetterMonoBehaviour
     {
         base.Start();
         BeginFB?.PlayFeedbacks();
-        _distance = Vector3.Distance(Interactor.transform.position, BeginHole.transform.position);
+        //_distance = Vector3.Distance(Interactor.transform.position, BeginHole.transform.position);
     }
 
     protected override void FixedUpdate()
@@ -30,8 +30,8 @@ public class TitileCredit : BetterMonoBehaviour
         base.FixedUpdate();
         _currDistance = Vector3.Distance(Interactor.transform.position, BeginHole.transform.position);
 
-        float speed = Mathf.Lerp(1, 3, 1 - (_currDistance - _distance));
-        BeginFB.TimescaleMultiplier = speed;
+        //float speed = Mathf.Lerp(1, 3, 1 - (_currDistance - _distance));
+        //BeginFB.TimescaleMultiplier = speed;
 
         if (_currDistance < 3 && _prevDis >= 3)
         {
