@@ -43,6 +43,7 @@ public class TitileCredit : BetterMonoBehaviour
 
     IEnumerator GestaltLogoRoutine(float duration)
     {
+        BeginFB?.SkipToTheEnd();
         IntroSfx?.PlayClip();
         yield return new WaitForSeconds(1f);
         duration -= 1f;
