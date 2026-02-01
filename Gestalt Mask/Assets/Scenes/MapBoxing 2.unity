@@ -39253,31 +39253,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5162007193586647745, guid: f4285d03bbf4a75459cfc858d62a4a7f, type: 3}
       propertyPath: managedReferences[6653730522706477729].NewText
-      value: 'ninja - tananat wongkampan
+      value: 'Ninja - Tananat Wongkampan
 
-        mask of anti-continuace'
+        Mask of Anti-Continuace'
       objectReference: {fileID: 0}
     - target: {fileID: 5162007193586647745, guid: f4285d03bbf4a75459cfc858d62a4a7f, type: 3}
       propertyPath: managedReferences[6653730522706477730].NewText
-      value: "punpun - suthanon vonganankit \nmask of closure wheel"
+      value: "Punpun - Suthanon Vonganankit \nMask of Closure Wheel"
       objectReference: {fileID: 0}
     - target: {fileID: 5162007193586647745, guid: f4285d03bbf4a75459cfc858d62a4a7f, type: 3}
       propertyPath: managedReferences[6653730522706477733].NewText
-      value: 'time - time muangman
+      value: 'Time - Time Muangman
 
-        mask of invariance light'
+        Mask of Invariance Light'
       objectReference: {fileID: 0}
     - target: {fileID: 5162007193586647745, guid: f4285d03bbf4a75459cfc858d62a4a7f, type: 3}
       propertyPath: managedReferences[6653730522706477735].NewText
-      value: 'rong - chayapol khodkham
+      value: 'Rong - Chayapol Khodkham
 
-        mask of proximity king'
+        Mask of Proximity King'
       objectReference: {fileID: 0}
     - target: {fileID: 5162007193586647745, guid: f4285d03bbf4a75459cfc858d62a4a7f, type: 3}
       propertyPath: managedReferences[6653730522706477738].NewText
-      value: 'special thanks to...
+      value: 'Special thanks to... Dragonnaja
 
-        mask of similiar Dragonnaja'
+        Mask of Similiar '
       objectReference: {fileID: 0}
     - target: {fileID: 5963412477066154100, guid: f4285d03bbf4a75459cfc858d62a4a7f, type: 3}
       propertyPath: m_SizeDelta.x
@@ -114145,7 +114145,7 @@ PrefabInstance:
     - target: {fileID: 2776131398085459628, guid: 171254e8d70c9114b84340a64b938053, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 889d662dfcb7a734380519d93063bab2, type: 2}
+      objectReference: {fileID: 2100000, guid: 71c3d8bbaaf427a4c8a77021e8d5e5a1, type: 2}
     - target: {fileID: 7000246670238271909, guid: 171254e8d70c9114b84340a64b938053, type: 3}
       propertyPath: m_Name
       value: MovingPlatformElevator
@@ -152493,7 +152493,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 889d662dfcb7a734380519d93063bab2, type: 2}
+  - {fileID: 2100000, guid: 71c3d8bbaaf427a4c8a77021e8d5e5a1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -261669,7 +261669,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 889d662dfcb7a734380519d93063bab2, type: 2}
+  - {fileID: 2100000, guid: 71c3d8bbaaf427a4c8a77021e8d5e5a1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -358122,7 +358122,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 889d662dfcb7a734380519d93063bab2, type: 2}
+  - {fileID: 2100000, guid: 71c3d8bbaaf427a4c8a77021e8d5e5a1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -391196,7 +391196,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 889d662dfcb7a734380519d93063bab2, type: 2}
+  - {fileID: 2100000, guid: 71c3d8bbaaf427a4c8a77021e8d5e5a1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -565113,7 +565113,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 71c3d8bbaaf427a4c8a77021e8d5e5a1, type: 2}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -567677,7 +567677,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 71c3d8bbaaf427a4c8a77021e8d5e5a1, type: 2}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
