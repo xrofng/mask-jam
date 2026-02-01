@@ -96,7 +96,7 @@ public class MaskController : BetterMonoBehaviour
             {
                 EquipMaskSfx?.PlayClip();
                 OnUnLock?.Invoke(curse.CurseMask);
-                _isMaskMechLock = true;
+                _isMaskMechLock = false;
             }
 
         }
