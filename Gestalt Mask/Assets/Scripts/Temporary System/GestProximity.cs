@@ -20,6 +20,7 @@ public class GestProximity : GestaltObj
     protected override void OnCurseEnabled()
     {
         base.OnCurseEnabled();
+        Debug.Log("dwd");
         foreach (FusionableObj member in GroupMember)
         {
             if(Vector3.Distance(member.transform.position, this.transform.position ) > 2)
