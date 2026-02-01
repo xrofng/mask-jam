@@ -22,7 +22,7 @@ public class BlockDoor : MonoBehaviour
         PlayerIn = true;
         Debug.Log("in");
 
-        if (pickUp.Holding.GetComponent<GestProximity>() == null)
+        if (pickUp.Holding && pickUp.Holding.GetComponent<GestProximity>() == null)
         {
             pickUp.ForceDrop();
         }
@@ -41,6 +41,7 @@ public class BlockDoor : MonoBehaviour
         //if (PlayerIn == false) return;
 
         //if (pickUp.Holding == null)
+
         //{
         //    //dorCol.enabled = false;
         //    return;

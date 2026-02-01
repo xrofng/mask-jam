@@ -54,6 +54,8 @@ public class MaskController : BetterMonoBehaviour
     public ECurse InitialCurse;
     public ECurse CurrentCurse;
 
+    private bool _isMaskMechLock = true;
+
     protected override void Start()
     {
         Invoke(nameof(SetCurseInitial), float.MinValue);
@@ -94,6 +96,7 @@ public class MaskController : BetterMonoBehaviour
             {
                 EquipMaskSfx?.PlayClip();
                 OnUnLock?.Invoke(curse.CurseMask);
+                _isMaskMechLock = true;
             }
 
         }
@@ -133,6 +136,7 @@ public class MaskController : BetterMonoBehaviour
 
     void setUpNewCurse()
     {
+        if (_isMaskMechLock) { return; }
 
         bool isSameCurse = (CurrentCurse == eCuseList[currentIndex].CurseMask);
 
