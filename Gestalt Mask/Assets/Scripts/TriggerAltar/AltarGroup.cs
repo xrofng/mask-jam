@@ -5,7 +5,7 @@ using UnityEngine;
 public class AltarGroup : PowerTrigger
 {
     public List<TriggerAltar> RequiredTrigger = new List<TriggerAltar>();
-
+    
     public void UpdatePower()
     {
         int count = 0;
@@ -17,12 +17,19 @@ public class AltarGroup : PowerTrigger
                 {
                     StopPower();
                 }
-                Debug.Log(name + " has " + count + " trigger power on");
-                return;
+                Debug.Log("Al that Need " + trigger.Key + " key has " + (trigger.PowerSource == true ? trigger.PowerSource.Key : "null"));
             }
-            count += 1;
+            else
+            {
+                count += 1;
+            }
         }
-        StartPower();
+        Debug.Log(name + " has " + count + " trigger power on");
+
+        if (count >= RequiredTrigger.Count)
+        {
+            StartPower();
+        }
     }
 
     protected override void OnPowerStarted()

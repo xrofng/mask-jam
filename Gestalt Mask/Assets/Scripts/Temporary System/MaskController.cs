@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MaskController : BetterMonoBehaviour
 {
@@ -27,12 +28,6 @@ public class MaskController : BetterMonoBehaviour
     int maxIndex => eCuseList.Count;
 
     public SimpleMMSoundPlayer EquipMaskSfx;
-
-
-
-
-
-
 
     public enum ECurse
     {
@@ -94,6 +89,7 @@ public class MaskController : BetterMonoBehaviour
         foreach (var curse in eCuseList)
         {
             bool beforeKeyState = curse.IsUnLock;
+            EquipMaskSfx?.PlayClip();
             curse.unlockKeyPress();
             if (beforeKeyState == false && curse.IsUnLock)
             {
@@ -163,6 +159,7 @@ public class EcurseMaskState
     [SerializeField] KeyCode UnLockKeyCode;
     [SerializeField] MaskController.ECurse curseMask;
     [SerializeField] bool isUnLock;
+    [SerializeField] Image LockImage;
 
     public EcurseMaskState(MaskController.ECurse curseMask, bool isUnLock)
     {
@@ -180,6 +177,7 @@ public class EcurseMaskState
         if (Input.GetKeyDown(UnLockKeyCode))
         {
             IsUnLock = true;
+            LockImage.enabled = false;
         }
     }
 
