@@ -26,7 +26,7 @@ public class GestProximity : GestaltObj
             {
                 Vector3 rand = Random.insideUnitSphere;
                 rand.y = Mathf.Abs(rand.y);
-                member.transform.position = rand + transform.position;
+                member.transform.position = rand + transform.position + Vector3.one;
             }
             member.Pickable.ShowObject();
             member.transform.parent = null;
