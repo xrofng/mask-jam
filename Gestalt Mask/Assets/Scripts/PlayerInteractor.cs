@@ -83,6 +83,11 @@ public class PlayerInteractor : BetterMonoBehaviour
                 continue;
             }
 
+            if (hit.collider.TryGetComponent<BlockDoor>(out var blockDoor))
+            {
+                return;
+            }
+
             if (hit.distance < closestDistance)
             {
                 closestDistance = hit.distance;

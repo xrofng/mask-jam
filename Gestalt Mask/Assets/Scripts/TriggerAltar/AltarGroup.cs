@@ -17,14 +17,12 @@ public class AltarGroup : PowerTrigger
                 {
                     StopPower();
                 }
-                Debug.Log("Al that Need " + trigger.Key + " key has " + (trigger.PowerSource == true ? trigger.PowerSource.Key : "null"));
             }
             else
             {
                 count += 1;
             }
         }
-        Debug.Log(name + " has " + count + " trigger power on");
 
         if (count >= RequiredTrigger.Count)
         {
