@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class TriggerAltar : PowerTrigger
+public class TriggerAltar : PowerTrigger, IEventSubcriber<MaskController.EvsCurseChanged>
 {
     [Header("Setting")]
     public Color powerOnColor;
@@ -31,13 +31,25 @@ public class TriggerAltar : PowerTrigger
     public SimpleMMSoundPlayer PickSFX;
     private Color _iColor;
 
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        EventBusRegister.EventBusUnscribe(this);
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        EventBusRegister.EventBusSubcribe(this);
+    }
+
     protected override void Awake()
     {
         base.Awake();
         _iColor = DetectorMesh[0].material.GetColor("_BaseColor");
 
-        if(ModeIsSub) { BindMovingPlatform = new MovingPlatform[0]; }
-        if(ModeIsNormal) { BindAltarGroup = null; }
+        if (ModeIsSub) { BindMovingPlatform = new MovingPlatform[0]; }
+        if (ModeIsNormal) { BindAltarGroup = null; }
     }
 
     protected override void Interact(PlayerInteractor interactor)
@@ -136,5 +148,17 @@ public class TriggerAltar : PowerTrigger
     protected override bool IsNeedMovingPlatform()
     {
         return ModeIsNormal;
+    }
+
+    public void OnEventBusTrigger(MaskController.EvsCurseChanged eventType)
+    {
+        if (powerSource == null) { return; }
+        if (powerSource.TryGetComponent(out GestProximity gestProximity) == false) { return; }
+
+        if (eventType.NextCurse == MaskController.ECurse.Proximity && eventType.PrevCurse != MaskController.ECurse.Proximity)
+        {
+            StopPower();
+            powerSource = null;
+        }
     }
 }
