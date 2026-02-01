@@ -16,6 +16,7 @@ public class SimilarityObject : GestaltObj
 
     protected override void OnCurseEnabled()
     {
+        //Debug.Log($"{gameObject.name} = {MeshRenderer}");
         base.OnCurseEnabled();
         MeshRenderer.material.SetColor("_BaseColor", RealColor);
     }
