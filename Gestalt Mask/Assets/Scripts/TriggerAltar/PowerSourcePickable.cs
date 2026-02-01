@@ -12,12 +12,15 @@ public class PowerSourcePickable : PickableObj
     protected override void OnPickedUp()
     {
         base.OnPickedUp();
-        TriggerAltar?.StopPower();
+        if (TriggerAltar != null)
+        {
+            TriggerAltar?.StopPower();
+            SetObjectFreeze(false);
+        }
         if (TryGetComponent(out fusionableObj))
         {
             fusionableObj.RemoveIntercpetor(this);
         }
-        SetObjectFreeze(false);
     }
 
     public void GivePower(TriggerAltar triggerAltar)
