@@ -54,30 +54,23 @@ public class TriggerAltar : PowerTrigger, IEventSubcriber<MaskController.EvsCurs
 
     protected override void Interact(PlayerInteractor interactor)
     {
-        Debug.Log("================" + Key + "================");
         if (interactor.PickUp.Holding && powerSource == null)
         {
             powerSource = interactor.PickUp.ForceDrop() as PowerSourcePickable;
 
-            Debug.Log(Key + " in interactor.PickUp.Holding && powerSource == null");
             if (powerSource != null)
             {
-                Debug.Log(Key + " in powerSource != null");
                 if (SpecifyKey)
                 {
-                    Debug.Log(Key + " in altar SpecifyKey");
                     if (Key.Contains(powerSource.Key))
                     {
-                        Debug.Log(Key + " in Key.Contains(powerSource.Key)");
                         StartPower();
                     }
                 }
                 else
                 {
-                    Debug.Log(Key + " in else");
                     StartPower();
                 }
-                Debug.Log(Key + " do OnPowerPlace");
                 OnPowerPlaced();
             }
         }
@@ -149,8 +142,10 @@ public class TriggerAltar : PowerTrigger, IEventSubcriber<MaskController.EvsCurs
         {
             BindAltarGroup.UpdatePower();
         }
-        UpdateSignifier();
-        PickSFX.PlayClip();
+        {
+            UpdateSignifier();
+            PickSFX.PlayClip();
+        }
     }
 
     protected override bool IsNeedMovingPlatform()

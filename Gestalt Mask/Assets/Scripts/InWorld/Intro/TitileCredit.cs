@@ -9,6 +9,7 @@ public class TitileCredit : BetterMonoBehaviour
     [SerializeField] Transform BeginHole;
     [SerializeField] PlayerInteractor Interactor;
     [SerializeField] MMF_Player BeginFB;
+    [SerializeField] SimpleMMSoundPlayer IntroSfx;
 
     [SerializeField] Image Image;
     [SerializeField] List<Sprite> SlideShows = new List<Sprite>();
@@ -42,6 +43,7 @@ public class TitileCredit : BetterMonoBehaviour
 
     IEnumerator GestaltLogoRoutine(float duration)
     {
+        IntroSfx?.PlayClip();
         yield return new WaitForSeconds(1f);
         duration -= 1f;
         Image.enabled  = true;
