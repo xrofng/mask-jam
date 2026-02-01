@@ -40,7 +40,7 @@ public class ChangeColor : BetterMonoBehaviour, IEventSubcriber<EvsCurseChanged>
     {
         colStor = GlobalColStorManager.Instance;
         Debug.Log("next " + (int)eventType.NextCurse);
-        _renderer.material.SetColor("_BaseColor", colStor.WallColors[(int)eventType.NextCurse]);
+        _renderer.sharedMaterial.SetColor("_BaseColor", colStor.WallColors[(int)eventType.NextCurse]);
         //if (gestaltObj.changedCurse == ECurse.None)
         //{
         //    _renderer.material.SetColor("_BaseColor", colStor.none_base);
