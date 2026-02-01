@@ -17,14 +17,22 @@ public class PowerSourcePickable : PickableObj
         {
             fusionableObj.RemoveIntercpetor(this);
         }
+        SetObjectFreeze(false);
     }
 
-    public void BindToTrigger(TriggerAltar triggerAltar)
+    public void GivePower(TriggerAltar triggerAltar)
     {
         TriggerAltar = triggerAltar;
         if (TryGetComponent(out fusionableObj))
         {
             fusionableObj.AddIntercpetor(this);
         }
+        SetObjectFreeze(true);
+    }
+
+    public void SetObjectFreeze(bool isFreeze)
+    {
+        //SetColliderActive(isFreeze == false);
+        SetRigibody(isFreeze == false);
     }
 }

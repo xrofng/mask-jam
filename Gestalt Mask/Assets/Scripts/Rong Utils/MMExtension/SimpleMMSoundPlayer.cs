@@ -14,7 +14,6 @@ public class SimpleMMSoundPlayer : MonoBehaviour
     [Range(-3f, 3f)]
     public float Pitch = 1f;
     // Pitch adjustment of the sound (1 = normal pitch)
-    public float PitchSwingRange = 0;
 
     public MMSoundManager.MMSoundManagerTracks Track = MMSoundManager.MMSoundManagerTracks.Music;
     // The track to play the sound on (Music, SFX, UI, etc.)
@@ -67,7 +66,7 @@ public class SimpleMMSoundPlayer : MonoBehaviour
             transform.position,         // Position in world space
             loop: Loop,
             volume: Volume,
-            pitch: Pitch + Mathf.Lerp(-PitchSwingRange, PitchSwingRange, Random.value),
+            pitch: Pitch,
             spatialBlend: SpatialBlend, // How 3D the sound is
             minDistance: MinDistance,   // Min distance for full volume
             maxDistance: MaxDistance    // Max distance before fading out

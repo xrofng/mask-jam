@@ -80,8 +80,9 @@ public class TriggerAltar : PowerTrigger, IEventSubcriber<MaskController.EvsCurs
     {
         powerSource.transform.position = PosMarker.transform.position;
         powerSource.transform.parent = PosMarker;
+
         powerSource.SetRigibody(false);
-        powerSource.BindToTrigger(this);
+        powerSource.GivePower(this);
         PlaceSFX.PlayClip();
 
         if (BindAltarGroup)

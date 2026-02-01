@@ -11,6 +11,7 @@ public class PowerTrigger : Interactable
 
     public bool IsPlatformMove => BindMovingPlatform[0].HasPower;
     public bool IsPowerOn => _isPowerOn;
+    public PowerSourcePickable PowerSource => powerSource;
 
     protected virtual bool IsNeedMovingPlatform()
     {
