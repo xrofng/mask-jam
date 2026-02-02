@@ -6,8 +6,10 @@ struct ScharrOperators
 ScharrOperators GetEdgeDetectionKernels()
 {
     ScharrOperators kernels;
-    kernels.x = float3x3(-3, -10, -3, 0, 0, 0, 3, 10, 3);
-    kernels.y = float3x3(-3, 0, 3, -10, 0, 10, -3, 0, 3);
+    //kernels.x = float3x3(-3, -10, -3, 0, 0, 0, 3, 10, 3);
+    //kernels.y = float3x3(-3, 0, 3, -10, 0, 10, -3, 0, 3);
+    kernels.x = float3x3(-1, -2, -1, 0, 0, 0, 1, 2, 1);
+    kernels.y = float3x3(-1, 0, 1, -2, 0, 2, -1, 0, 1);
     
     return kernels;
 }
@@ -19,6 +21,7 @@ void DepthBasedOutlines_float(float2 screenUV, float2 px, out float outlines)
     ScharrOperators kernels = GetEdgeDetectionKernels();
     float gx = 0;
     float gy = 0;
+    [uroll]
     for (int i = -1; i <= 1; i++)
     {
         for (int j = -1; j <= 1; j++)
@@ -31,7 +34,7 @@ void DepthBasedOutlines_float(float2 screenUV, float2 px, out float outlines)
         }
     }
     float g = sqrt(gx * gx + gy * gy);
-    outlines = step(.02, g);
+    outlines = step(0.05, g);
     #endif
 }
 
@@ -43,6 +46,7 @@ void NormalBasedOutline_float(float2 screenUV, float2 px, out float outlines)
     float gx = 0;
     float gy = 0;
     float3 cn = SampleSceneNormals(screenUV);
+    [unroll]
     for (int i = -1; i <= 1; i++)
     {
         for (int j = -1; j <= 1; j++)
@@ -57,6 +61,6 @@ void NormalBasedOutline_float(float2 screenUV, float2 px, out float outlines)
         }
     }
     float g = sqrt(gx * gx + gy * gy);
-    outlines = step(2, g);
+    outlines = step(0.1, g);
 #endif
 }

@@ -162,6 +162,7 @@ namespace StarterAssets
 
         private void CameraRotation()
         {
+            if (!Application.isFocused) return;
             // if there is an input
             if (_input.look.sqrMagnitude >= _threshold)
             {
