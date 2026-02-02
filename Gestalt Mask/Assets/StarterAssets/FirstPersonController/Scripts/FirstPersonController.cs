@@ -59,6 +59,7 @@ namespace StarterAssets
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
+        private float _fallMultiplier = 1.5f;
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -306,7 +307,7 @@ namespace StarterAssets
                 // stop our velocity dropping infinitely when grounded
                 if (_verticalVelocity < 0.0f)
                 {
-                    _verticalVelocity = -2f;
+                    _verticalVelocity = -5f;
                 }
 
                 // Jump
@@ -340,7 +341,7 @@ namespace StarterAssets
             // apply gravity over time if under terminal
             if (_verticalVelocity < _terminalVelocity)
             {
-                _verticalVelocity += Gravity * Time.deltaTime;
+                _verticalVelocity += Gravity * _fallMultiplier * Time.deltaTime;
             }
         }
 

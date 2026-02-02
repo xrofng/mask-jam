@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CurseScroll : BetterMonoBehaviour
@@ -96,12 +97,17 @@ public class CurseScroll : BetterMonoBehaviour
         curseBox_Uis.FirstOrDefault(i => i.BoxCurseType == triggerUnlokcCurse).UpdateState(true);
     }
 
-
     IEnumerator routine()
     {
+        float time = 0f;
         CanvasGroup.alpha = 1;
         yield return new WaitForSeconds(disableTime);
-        CanvasGroup.alpha = 0;
+        while (time < 0.3f)
+        {
+            time+= Time.deltaTime;
+            CanvasGroup.alpha = Mathf.MoveTowards(1, 0, time/0.3f);
+            yield return null;
+        }
     }
 
     MaskController.ECurse previosActiveCurse = MaskController.ECurse.None;
