@@ -6446,16 +6446,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'V
+  m_text: '"V"
 
     It changes.
 
-    V again
+    "V" again
 
     It changes again.
 
-    Still, you
-    know it.
+    Still,
+    you know it.
 
 
 
@@ -6585,16 +6585,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 23448622}
-  m_LocalRotation: {x: -0.032814555, y: 0.987429, z: -0.13337152, w: -0.078225516}
-  m_LocalPosition: {x: 0, y: 0, z: -103.145}
+  m_LocalRotation: {x: -0.05712517, y: 0.9960532, z: -0.018263264, w: -0.06543117}
+  m_LocalPosition: {x: 0, y: 0, z: -103.869}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 15.576, y: 188.702, z: -2.614}
+  m_LocalEulerAnglesHint: {x: 2.514, y: 187.376, z: -6.403}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 58.11, y: 13.167}
+  m_AnchoredPosition: {x: 57.999, y: 13.512}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &24675036
@@ -59280,7 +59280,7 @@ MonoBehaviour:
 
     What was missing returns.
 
-    You press 0
+    You press "0"
     (zero).
 
     Every hole remembers how to be filled.'
@@ -429779,7 +429779,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: hey you won't supposed to be here yet, return
+  m_text: "hey you weren't supposed to be here yet, \n\nreturn."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
