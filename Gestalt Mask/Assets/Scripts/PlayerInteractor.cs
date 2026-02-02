@@ -68,7 +68,7 @@ public class PlayerInteractor : BetterMonoBehaviour
             radius,
             interactRange,
             InteractLayer,
-            QueryTriggerInteraction.Ignore
+            QueryTriggerInteraction.Collide
         );
 
         closestHit = default;
@@ -78,17 +78,26 @@ public class PlayerInteractor : BetterMonoBehaviour
         {
             if (hit.collider == null) continue;
 
-            if (hit.collider.TryGetComponent<Interactable>(out var interactable) && interactable.IsEnabled == false)
-            {
-                continue;
-            }
-
             if (hit.collider.TryGetComponent<BlockDoor>(out var blockDoor))
             {
                 return;
             }
 
-            if (hit.distance < closestDistance)
+            
+
+            if (hit.collider.TryGetComponent<Interactable>(out var interactable) && interactable.IsEnabled == false)
+            {
+                continue;
+            }
+
+            float distance = hit.distance;
+
+            if (hit.collider.TryGetComponent<AltarGroup>(out var altar))
+            {
+                distance *= 2;
+            }
+
+            if (distance < closestDistance)
             {
                 closestDistance = hit.distance;
                 closestHit = hit;
